@@ -1,7 +1,8 @@
+#pragma once
 #ifndef VTYPES_H
 #define VTYPES_H
 
-
+#define ARMA_DONT_USE_WRAPPER
 
 #include <iostream>
 #include <algorithm>
