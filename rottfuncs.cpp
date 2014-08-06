@@ -1,4 +1,5 @@
 #include "rottfuncs.h"
+#include <bessel.h>
 
 namespace rottfuncs{
 
@@ -48,12 +49,18 @@ namespace rottfuncs{
     return res;
   }
 
-  rottfuncs::rottfuncs(){
-    f_ptr=&f_inviscid;
+  RottFuncs::RottFuncs():RottFuncs("inviscid"){}
+  RottFuncs::RottFuncs(const RottFuncs& other):RottFuncs(other.cshape){}
+  RottFuncs& RottFuncs::operator=(const RottFuncs& other){
+    this->cshape=other.cshape;
+    setFptr(this->cshape);
+    return *this;
   }
-
-  rottfuncs::rottfuncs(string cshape){
-    TRACE(8,"rottfuncs::rottfuncs("<<cshape<< ")");
+  RottFuncs::RottFuncs(string cshape){
+    TRACE(8,"RottFuncs::RottFuncs("<<cshape<< ")");
+    setFptr(cshape);
+  }
+  void RottFuncs::setFptr(string& cshape)  {
     if(cshape.compare("circ")==0) {
       f_ptr=&f_circ;
     }
@@ -71,9 +78,9 @@ namespace rottfuncs{
       f_ptr=&f_inviscid;
     }
   }
-  vc rottfuncs::fx(const vc& rh_over_delta) const{
-    TRACE(0,"rottfuncs::fx(const vc& rh_over_delta)");
+  vc RottFuncs::fx(const vc& rh_over_delta) const{
+    TRACE(0,"RottFuncs::fx(const vc& rh_over_delta)");
     return (*f_ptr)(rh_over_delta);
   }
-  rottfuncs::~rottfuncs(){}
+
 } // namespace rottfuncs
