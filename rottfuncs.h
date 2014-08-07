@@ -25,7 +25,9 @@ namespace rottfuncs{
     RottFuncs(const RottFuncs& other);
     RottFuncs& operator=(const RottFuncs&);
     RottFuncs(string cshape);
+    vc fx(const vd& rh_over_delta) const; // For real omega's
     vc fx(const vc& rh_over_delta) const;
+    string getCShape() const {return cshape;}
   private:
     void setFptr(string& cshape);
 

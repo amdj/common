@@ -1,6 +1,6 @@
 #include "rottfuncs.h"
 #include <bessel.h>
-
+#include <assert.h>
 namespace rottfuncs{
 
   using math_common::besselj0;
@@ -87,6 +87,11 @@ namespace rottfuncs{
   vc RottFuncs::fx(const vc& rh_over_delta) const{
     TRACE(0,"RottFuncs::fx(const vc& rh_over_delta)");
     return (*f_ptr)(rh_over_delta);
+  }
+  vc RottFuncs::fx(const vd& rh_over_delta) const{
+    vc ccc=(1.0+0.0*I)*rh_over_delta;
+    // strict=true, so cannot be resized
+    return fx(ccc);
   }
 
 } // namespace rottfuncs
