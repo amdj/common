@@ -18,6 +18,8 @@ namespace rottfuncs{
   
   
   class RottFuncs{		// Thermoviscous Rott functions
+    vc (*f_ptr)(const vc& rh_over_deltak);
+    string cshape;
   public:
     RottFuncs();
     RottFuncs(const RottFuncs& other);
@@ -25,9 +27,8 @@ namespace rottfuncs{
     RottFuncs(string cshape);
     vc fx(const vc& rh_over_delta) const;
   private:
-    vc (*f_ptr)(const vc& rh_over_deltak);
     void setFptr(string& cshape);
-    string cshape;
+
   };
 
 }

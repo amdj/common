@@ -52,29 +52,35 @@ namespace rottfuncs{
   RottFuncs::RottFuncs():RottFuncs("inviscid"){}
   RottFuncs::RottFuncs(const RottFuncs& other):RottFuncs(other.cshape){}
   RottFuncs& RottFuncs::operator=(const RottFuncs& other){
+    TRACE(10,"RottFuncs::operator=()");
     this->cshape=other.cshape;
-    setFptr(this->cshape);
+    this->setFptr(this->cshape);
     return *this;
   }
-  RottFuncs::RottFuncs(string cshape){
+  RottFuncs::RottFuncs(string cshape):cshape(cshape){
     TRACE(8,"RottFuncs::RottFuncs("<<cshape<< ")");
     setFptr(cshape);
   }
   void RottFuncs::setFptr(string& cshape)  {
+    TRACE(10,"Rottfuncs::setFptr()");
     if(cshape.compare("circ")==0) {
+      TRACE(10,"Fptr set to circ")
       f_ptr=&f_circ;
     }
     else if(cshape.compare("vert")==0){
+      TRACE(10,"Fptr set to vert");
       f_ptr=&f_vert<vc>;
     }
     else if(cshape.compare("square")==0){
+      TRACE(10,"Fptr set to square");
       f_ptr=&f_square;
     }
-
     else if(cshape.compare("blapprox")==0){
+      TRACE(10,"Fptr set to blapprox");
       f_ptr=&f_blapprox;
     }
     else{
+      TRACE(10,"Fptr set to inviscid");
       f_ptr=&f_inviscid;
     }
   }
