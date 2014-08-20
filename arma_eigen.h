@@ -8,12 +8,14 @@
 #include <Eigen/Sparse>
 #include <Eigen/Dense>
 
+typedef Eigen::SparseMatrix<double> esdmat; // declares a column-major sparse matrix type of double
+typedef Eigen::Triplet<double> triplet;
+typedef Eigen::VectorXd evd;
+typedef Eigen::MatrixXd edmat;
+
+
 namespace math_common{
   SPOILNAMESPACE
-  typedef Eigen::SparseMatrix<double> esdmat; // declares a column-major sparse matrix type of double
-  typedef Eigen::Triplet<double> triplet;
-  typedef Eigen::VectorXd evd;
-  typedef Eigen::MatrixXd edmat;
   
   // These functions all make copies of the vectors. If you do not
   // want copies, we can use the view functions, as defined below
