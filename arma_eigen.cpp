@@ -33,22 +33,22 @@ namespace math_common{
       // Check if we are not in the last column
       // TRACE(1,"Current column:"<<curcolumn);
       if(curcolumn<ncols-1){
-      // First: check if next value of col_ptr is same, if so: no values in this column
+	// First: check if next value of col_ptr is same, if so: no values in this column
 	if(col_ptrs(colptrcounter)!=col_ptrs(colptrcounter+1)){
 	  // OK, we can add values to this column
 	  // TRACE(1,"")
-	    for(us ind=col_ptrs(colptrcounter);ind<col_ptrs(colptrcounter+1);ind++){
-	      // TRACE(1,"Index:"<<ind);
-	      col_indices(ind)=curcolumn;
-	    }
+	  for(us ind=col_ptrs(colptrcounter);ind<col_ptrs(colptrcounter+1);ind++){
+	    // TRACE(1,"Index:"<<ind);
+	    col_indices(ind)=curcolumn;
+	  }
 	}
       }
       else{			// Do the things for the last column
 	// TRACE(-2,"Last column reached")
-	  for(us ind=col_ptrs(colptrcounter);ind<n_nonzero;ind++){
-	      // TRACE(1,"Index:"<<ind);	    
-	      col_indices(ind)=curcolumn;
-	  }
+	for(us ind=col_ptrs(colptrcounter);ind<n_nonzero;ind++){
+	  // TRACE(1,"Index:"<<ind);	    
+	  col_indices(ind)=curcolumn;
+	}
       }
       
       colptrcounter++;
@@ -92,6 +92,89 @@ namespace math_common{
     return vd(vec.data(),vec.rows(),false,false);
   }
   
+  void insertInRowFromLeftSide(esdmat& Mat,const vd& data,us rownr){
+    TRACE(15,"InserInRowFromLeftSide");
+    assert(data.size()<=Mat.cols());
+    assert(rownr<Mat.rows());
+    us cursize=Mat.nonZeros();
+    us newsize=cursize+data.size(); // Allocates more than enough
+    us datasize=data.size();
+    Mat.reserve(newsize);
+    for(us i=0;i<datasize;i++){
+      if(data(i)!=0)
+	Mat.insert(rownr,i)=data(i);
+    } // for
+  
+  } // insertInRowFromLeftSide
+
+  void insertSubMatrixInMatrixTopLeft(esdmat& target,const esdmat& source) {
+    TRACE(15,"insertSubMatrixInMatrixTopLeft()");
+    assert(source.cols()<=target.cols());
+    assert(source.rows()<=target.rows());
+    
+    vtriplet tr=math_common::getTriplets(source);
+
+
+  }
+  
+  vtriplet getTriplets(const esdmat & mat){
+    //only for ColMajor Sparse Matrix
+    assert(mat.rows()==mat.cols());
+    us size=mat.rows();
+    int i,j,currOuterIndex,nextOuterIndex;
+    vtriplet tripletList;
+    tripletList.reserve(mat.nonZeros());
+    for(j=0; j<size; j++){
+      currOuterIndex = mat.outerIndexPtr()[j];
+      nextOuterIndex = mat.outerIndexPtr()[j+1];
+
+      for(int a = currOuterIndex; a<nextOuterIndex; a++){
+	i=mat.innerIndexPtr()[a];
+	if(i < 0) continue;
+	if(i >= size) break;
+	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
+      } // inner for
+    } // for
+    return tripletList;
+  } // getTriplets
+
+  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols){
+    assert(startrow+nrows <= mat.rows());
+    assert(startcol+ncols <= mat.cols());
+    us Mj,Mi,i,j,currOuterIndex,nextOuterIndex;
+    vtriplet tripletList;
+    tripletList.reserve(mat.nonZeros());
+
+    for(j=0; j<ncols; j++){
+      Mj=j+startcol;
+      currOuterIndex = mat.outerIndexPtr()[Mj];
+      nextOuterIndex = mat.outerIndexPtr()[Mj+1];
+
+      for(int a = currOuterIndex; a<nextOuterIndex; a++){
+	Mi=mat.innerIndexPtr()[a];
+
+	if(Mi < startrow) continue;
+	if(Mi >= startrow + nrows) break;
+
+	i=Mi-startrow;    
+	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
+      }
+    }
+    return tripletList;
+  }
+
+  void shiftTriplets(vtriplet& triplets,int nrows,int ncols){
+    TRACE(15,"shiftTriplets()");
+    us size=triplets.size();
+    for(us j=0;j<size;j++){
+      const_cast<int&>(triplets[j].col())=triplets[j].col()+ncols;
+      const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
+    }
+  }
+  
   
   
 } // namespace math_common
+
+
+

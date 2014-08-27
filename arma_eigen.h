@@ -10,6 +10,7 @@
 
 typedef Eigen::SparseMatrix<double> esdmat; // declares a column-major sparse matrix type of double
 typedef Eigen::Triplet<double> triplet;
+typedef std::vector<triplet> vtriplet;
 typedef Eigen::VectorXd evd;
 typedef Eigen::MatrixXd edmat;
 
@@ -30,7 +31,16 @@ namespace math_common{
   vd armaView(evd& Eigenvec);
 
   // inline Eigen::Map<Eigen::VectorXd> eigenMap(double* data,us size) { return Eigen::Map<Eigen::VectorXd>(data,size); }
+
+  // Insert data in a specific row of matrix Mat
+  void insertInRowFromLeftSide(esdmat& Mat,const vd& data,us rownr);
   
+  // Insert components at the topleft of the target matrix
+  void insertSubMatrixInMatrixTopLeft(esdmat& target,esdmat& submat);
+  vtriplet getTriplets(const esdmat& mat);
+  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols);
+  void shiftTriplets(vtriplet& triplets,int nrows,int ncols); // Shift
+ // position of triplets a certain number of rows and cols.
 } // namespace math_common
 
 
