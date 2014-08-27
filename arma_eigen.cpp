@@ -171,7 +171,18 @@ namespace math_common{
       const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
     }
   }
-  
+  void multiplyTriplets(vtriplet& triplets,d factor){
+    TRACE(15,"multiplyTriplets()");
+    us size=triplets.size();
+    for(us j=0;j<size;j++){
+      const_cast<d&>(triplets[j].value())=triplets[j].value()*factor;
+    }
+  }
+  void reserveExtraDofs(vtriplet& trip,us n){
+    TRACE(15,"reserveExtraDofs()");
+    us cursize=trip.size();
+    trip.reserve(cursize+n);
+  }
   
   
 } // namespace math_common

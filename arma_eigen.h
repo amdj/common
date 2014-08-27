@@ -40,8 +40,13 @@ namespace math_common{
   vtriplet getTriplets(const esdmat& mat);
   vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols);
   void shiftTriplets(vtriplet& triplets,int nrows,int ncols); // Shift
- // position of triplets a certain number of rows and cols.
+  // position of triplets a certain number of rows and cols.
+
+  void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
+  void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
 } // namespace math_common
 
 
 #endif /* _ARMA_EIGEN_H_ */
+
+
