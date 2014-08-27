@@ -39,3 +39,5 @@ target_link_libraries(gas math_common armadillo)
 target_link_libraries(solid math_common armadillo)
 SET_TARGET_PROPERTIES(gas PROPERTIES COMPILE_FLAGS "-Wno-cpp -DLOGLEVEL=gaslogger")
 SET_TARGET_PROPERTIES(solid PROPERTIES COMPILE_FLAGS "-Wno-cpp -DLOGLEVEL=solidlogger")
+
+

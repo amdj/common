@@ -121,16 +121,16 @@ extern int LOGLEVEL;
 
 // 
 #if TRACER == 1 or LOGGER == 1
-#define initlog(ll) \
+#define initlog(ll)								\
   std::cout << "Initlog with loglevel " << ll << " for " << annestr(LOGLEVEL) << "\n"; \
   LOGLEVEL=ll;
 
-#define initotherlog(ll,mylogger)								\
+#define initotherlog(ll,mylogger)						\
   std::cout << "Initlog with loglevel " << ll << " for " << annestr(mylogger) << "\n"; \
   extern int mylogger; \
   mylogger=ll;
 
-#else
+#else  // LOGGER !=1 or TRACER!=1
 #define initlog(a)
 #define initotherlog(a,mylogger)
 #endif	// TRACER == 1 or LOGGER == 1
