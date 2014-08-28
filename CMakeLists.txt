@@ -27,7 +27,6 @@ include_directories(
 
 target_link_libraries(math_common armadillo)
 
-
 set_source_files_properties(
   gas.pyx solid.pyx
   PROPERTIES CYTHON_IS_CXX TRUE )
