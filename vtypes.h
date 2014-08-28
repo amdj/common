@@ -10,11 +10,7 @@
 #error The c++ compiler should be used.
 #endif
 
-#ifdef NODEBUG
-#define ARMA_NO_DEBUG
-#endif
-
-#include "logger.h"		// A logger instance
+#include "tracer.h"		// A tracer instance
 
 // Some header files I (almost) always need
 #include <iostream>

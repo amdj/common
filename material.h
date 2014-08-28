@@ -95,9 +95,9 @@ namespace gases {
    protected:
      void update(){
        TRACE(0,"Gasprops::update(T)");
-       //			TRACELOG("T:"<< T);
+       //			TRACE(9,"T:"<< T);
        rho=gas.rho(T,p);
-       //			TRACELOG("rho:"<< rho);
+       //			TRACE(9,"rho:"<< rho);
        kappa=gas.kappa(T);
        beta=gas.beta(T);
        mu=gas.mu(T);

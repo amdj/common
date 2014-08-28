@@ -120,7 +120,7 @@ namespace math_common{
   vtriplet getTriplets(const esdmat & mat){
     //only for ColMajor Sparse Matrix
     assert(mat.rows()==mat.cols());
-    us size=mat.rows();
+    int size=mat.rows();
     int i,j,currOuterIndex,nextOuterIndex;
     vtriplet tripletList;
     tripletList.reserve(mat.nonZeros());
@@ -150,7 +150,7 @@ namespace math_common{
       currOuterIndex = mat.outerIndexPtr()[Mj];
       nextOuterIndex = mat.outerIndexPtr()[Mj+1];
 
-      for(int a = currOuterIndex; a<nextOuterIndex; a++){
+      for(us a = currOuterIndex; a<nextOuterIndex; a++){
 	Mi=mat.innerIndexPtr()[a];
 
 	if(Mi < startrow) continue;

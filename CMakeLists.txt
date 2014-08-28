@@ -1,5 +1,5 @@
 #Configure logger
-configure_file (logger.h.in  "${CMAKE_CURRENT_SOURCE_DIR}/logger.h")
+# configure_file (logger.h.in  "${CMAKE_CURRENT_SOURCE_DIR}/logger.h")
 set (math_common_SRC
   math_common.cpp
   fsolve/fsolve.cpp
@@ -14,7 +14,7 @@ set (math_common_SRC
 add_library(math_common ${math_common_SRC})
 
 SET_TARGET_PROPERTIES(math_common PROPERTIES COMPILE_FLAGS
-  "-DLOGLEVEL=mathcommonlogger")
+  "-DTRACERNAME=mathcommonlogger")
 
 # math_common should be linked to armadillo
 include_directories(

@@ -1,6 +1,6 @@
 #include "math_common.h"
 
-LOGTHIS
+TRACETHIS
 namespace math_common{
   
 
