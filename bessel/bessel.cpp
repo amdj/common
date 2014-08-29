@@ -11,7 +11,11 @@ namespace math_common{
     else
       return 1.0;
   }
-  
+  vd skewsine(const vd& x){
+    vd result=x;
+    result.transform( [](d val) {return skewsine(val);});
+    return result;
+  }  
   c besselj0_smallarg(c x){
     //Abramowich p. 369, polynomial approximation
     //For complex numbers, unfortunately we have to check
