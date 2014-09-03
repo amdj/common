@@ -2,6 +2,15 @@
 
  namespace solids{
    //Stainless steel
+
+   vd stainless_hopkins::cs(const vd& T) const{return 490*pow(T,0);}
+   d stainless_hopkins::cs(const d& T) const{return 490;}   
+   vd stainless_hopkins::rho(const vd& T) const{return 7900*pow(T,0);}
+   d stainless_hopkins::rho(const d& T) const{return 7900;}  
+   vd stainless_hopkins::kappa(const vd& T) const{return 14.9*pow(T,0);}
+   d stainless_hopkins::kappa(const d& T) const{return 14.9;}   
+
+   
    vd stainless::cs(const vd& T) const {
      vd arg=1.7054e-6*pow(T,-0.88962)+22324.0/pow(T,6);
      return pow(arg,-1.0/3.0)+15/T;

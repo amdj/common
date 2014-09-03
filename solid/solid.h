@@ -16,6 +16,17 @@ namespace solids{
     virtual d rho(const d& T) const =0;
 
   };
+  class stainless_hopkins:public Solidmat
+  {
+  public:
+    vd kappa(const vd& T) const;
+    d kappa(const d& T) const;
+    vd cs(const vd& T) const;
+    d cs(const d& T) const;
+    vd rho(const vd& T) const;
+    d rho(const d& T) const;
+  };
+
   class stainless: public Solidmat{
   public:
     vd kappa(const vd& T) const;

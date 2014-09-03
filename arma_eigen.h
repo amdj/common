@@ -44,6 +44,21 @@ namespace math_common{
 
   void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
   void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
+
+
+  // class anneTriplets{
+  //   vd values;
+  //   arma::Col<us> rows;
+  //   arma::Col<us> cols;
+
+
+  // };
+
+
+
+
+
+  
 } // namespace math_common
 
 

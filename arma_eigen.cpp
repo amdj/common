@@ -94,8 +94,8 @@ namespace math_common{
   
   void insertInRowFromLeftSide(esdmat& Mat,const vd& data,us rownr){
     TRACE(15,"InserInRowFromLeftSide");
-    assert(data.size()<=Mat.cols());
-    assert(rownr<Mat.rows());
+    assert(data.size()<= (us) Mat.cols());
+    assert(rownr< (us) Mat.rows());
     us cursize=Mat.nonZeros();
     us newsize=cursize+data.size(); // Allocates more than enough
     us datasize=data.size();
@@ -117,30 +117,47 @@ namespace math_common{
 
   }
   
+  // vtriplet getTriplets(const esdmat & mat){
+  //   //only for ColMajor Sparse Matrix
+  //   assert(mat.rows()==mat.cols());
+  //   int size=mat.rows();
+  //   int i,j,currOuterIndex,nextOuterIndex;
+  //   vtriplet tripletList;
+  //   tripletList.reserve(mat.nonZeros());
+  //   for(j=0; j<size; j++){
+  //     currOuterIndex = mat.outerIndexPtr()[j];
+  //     nextOuterIndex = mat.outerIndexPtr()[j+1];
+
+  //     for(int a = currOuterIndex; a<nextOuterIndex; a++){
+  // 	i=mat.innerIndexPtr()[a];
+  // 	if(i < 0) continue;
+  // 	if(i >= size) break;
+  // 	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
+  //     } // inner for
+  //   } // for
+  //   return tripletList;
+  // } // getTriplets
   vtriplet getTriplets(const esdmat & mat){
     //only for ColMajor Sparse Matrix
-    assert(mat.rows()==mat.cols());
-    int size=mat.rows();
-    int i,j,currOuterIndex,nextOuterIndex;
-    vtriplet tripletList;
-    tripletList.reserve(mat.nonZeros());
-    for(j=0; j<size; j++){
-      currOuterIndex = mat.outerIndexPtr()[j];
-      nextOuterIndex = mat.outerIndexPtr()[j+1];
-
-      for(int a = currOuterIndex; a<nextOuterIndex; a++){
-	i=mat.innerIndexPtr()[a];
-	if(i < 0) continue;
-	if(i >= size) break;
-	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
-      } // inner for
-    } // for
-    return tripletList;
+    vtriplet tripletlist;
+    tripletlist.reserve(mat.nonZeros());
+    for (int k=0; k<mat.outerSize(); ++k){
+      for (Eigen::SparseMatrix<double>::InnerIterator it(mat,k); it; ++it)
+	{
+	  it.value();
+	  it.row(); // row index
+	  it.col(); // col index (here it is equal to k)
+	  it.index(); // inner index, here it is equal to it.row()
+	  tripletlist.push_back(triplet(it.row(),it.col(),it.value()));
+	}
+    }
+    
+    return tripletlist;
   } // getTriplets
 
   vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols){
-    assert(startrow+nrows <= mat.rows());
-    assert(startcol+ncols <= mat.cols());
+    assert(startrow+nrows <= (us) mat.rows());
+    assert(startcol+ncols <= (us) mat.cols());
     us Mj,Mi,i,j,currOuterIndex,nextOuterIndex;
     vtriplet tripletList;
     tripletList.reserve(mat.nonZeros());

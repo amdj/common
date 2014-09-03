@@ -57,6 +57,10 @@ namespace solids {
       sol=new stainless();
       TRACE(3,"Solid set to stainless");
     }
+    else if(name.compare("stainless_hopkins")==0){
+      sol=new stainless_hopkins();
+      TRACE(3,"Solid set to stainless_hopkins");
+    }
     else if(name.compare("copper")==0){
       sol=new copper();
       TRACE(3,"Solid set to copper");
@@ -68,9 +72,7 @@ namespace solids {
     }
     else {
       cerr << "Error: no matching solid material found with: " << name << endl;
-      exit(1);
-      sol=new stainless();
-
+      abort();
     }
   }
   Solid::Solid(const Solid& other): Solid(other.solidstring){}
@@ -81,10 +83,10 @@ namespace solids {
     return *this;
   }
   vd Solid::kappa(const vd& T) const {
-#ifdef ANNE_DEBUG
+    #ifdef ANNE_DEBUG
     cout << "Solid--> kappa called" << endl;
     cout << sol << endl;
-#endif
+    #endif
     vd res=sol->kappa(T);
     return res;
   }
