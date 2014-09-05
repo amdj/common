@@ -200,6 +200,50 @@ namespace math_common{
     us cursize=trip.size();
     trip.reserve(cursize+n);
   }
+  evd solvesys_eigen(const esdmat& K,const evd& f) {
+    TRACE(15,"Eigen solver used for large system");
+    // Solve a linear system using Eigen sparse
+    // Form: K*x=f
+    assert(f.size()>0);
+
+    // Eigen::SimplicialCholesky<esdmat,Eigen::COLAMDOrdering<int> > solver(jac); // Werkt niet...
+    // Eigen::SimplicialCholesky<esdmat,3 > solver(jac2); // Werkt niet...    
+    // Eigen::SimplicialLDLT<esdmat> solver(jac2);
+    // Eigen::SparseQR<esdmat,Eigen::COLAMDOrdering<int> > solver(jac2);      
+    // matrix
+    // cout << "f:\n"<<f;
+    // cout << "Matrix k:"<< K << "\n";
+    // Eigen::FullPivLU<edmat> dec(K);
+    TRACE(19,"Initializing solver...");    
+    // Eigen::SparseQR<esdmat,Eigen::COLAMDOrdering<int> > solver(K);
+    Eigen::SparseLU<esdmat,Eigen::COLAMDOrdering<int> > solver(K);
+
+    switch(solver.info()){
+    case ComputationInfo::InvalidInput:
+      cout << "Solver initialization failed: invalid input" << "\n";
+      throw(0);
+    case ComputationInfo::NumericalIssue:
+      cout << "Solver initialization failed: numerical issue" << "\n";
+      throw(0);
+    case ComputationInfo::NoConvergence:
+      cout << "Solver initialization failed: no convergence" << "\n";
+      throw(0);
+      
+    } // switch
+    cout << "Logarithm of absolute value of determinant of matrix: "<<solver.logAbsDeterminant() <<"\n";
+    // Eigen::BiCGSTAB<Eigen::SparseMatrix<double> > solver(K);
+    // cout << "Logarithm of absolute value of determinant of matrix: "<<solver.logAbsDeterminant() <<"\n";
+    
+    // solver.setMaxIterations(500);
+    
+    TRACE(19,"Solving linear system...");    
+    evd x=solver.solve(f);
+    // std::cout << "#iterations: " << solver.iterations() << std::endl;
+    // std::cout << "estimated error: " << solver.error() << std::endl;
+
+    TRACE(19,"Solving linear system done.");    
+    return x;    
+  }
   
   
 } // namespace math_common

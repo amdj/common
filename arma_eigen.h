@@ -17,6 +17,7 @@ typedef Eigen::MatrixXd edmat;
 
 namespace math_common{
   SPOILNAMESPACE
+  using Eigen::ComputationInfo;
   
   // These functions all make copies of the vectors. If you do not
   // want copies, we can use the view functions, as defined below
@@ -45,7 +46,7 @@ namespace math_common{
   void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
   void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
 
-
+  evd solvesys_eigen(const esdmat& K,const evd& f);
   // class anneTriplets{
   //   vd values;
   //   arma::Col<us> rows;
