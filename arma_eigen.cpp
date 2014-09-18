@@ -88,8 +88,9 @@ namespace math_common{
   dmat armaView(edmat Eigenmat)  {
     return dmat(Eigenmat.data(),Eigenmat.rows(),Eigenmat.cols(),false,false);
   }
-  vd armaView(evd& vec)  {
-    return vd(vec.data(),vec.rows(),false,false);
+  vd armaView(const evd& vec)  {
+    d* data=const_cast<d*>(vec.data()); // Filthy hack
+    return vd(data,vec.rows(),false,false);
   }
   
   void insertInRowFromLeftSide(esdmat& Mat,const vd& data,us rownr){

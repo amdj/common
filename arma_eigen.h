@@ -27,8 +27,8 @@ namespace math_common{
   vd EigenToArma(const evd& Evd);	// And back to Armadillo
 
   // Functions for creating "views" for the buffers
-  dmat armaView(esdmat& EigenMat);	// 
-  vd armaView(evd& Eigenvec);
+  dmat armaView(edmat EigenMat);	// 
+  vd armaView(const evd& Eigenvec);
 
   // inline Eigen::Map<Eigen::VectorXd> eigenMap(double* data,us size) { return Eigen::Map<Eigen::VectorXd>(data,size); }
 
