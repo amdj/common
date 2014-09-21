@@ -189,6 +189,7 @@ namespace math_common{
       const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
     }
   }
+  
   void multiplyTriplets(vtriplet& triplets,d factor){
     TRACE(15,"multiplyTriplets()");
     us size=triplets.size();
@@ -204,6 +205,12 @@ namespace math_common{
   
   
 } // namespace math_common
+
+
+
+
+
+
 
 
 

@@ -41,7 +41,8 @@ namespace math_common{
   vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols);
   void shiftTriplets(vtriplet& triplets,int nrows,int ncols); // Shift
   // position of triplets a certain number of rows and cols.
-
+  void zeroOutRow(vtriplet&,us rownr);
+  
   void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
   void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
 
