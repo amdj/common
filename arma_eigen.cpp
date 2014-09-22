@@ -108,36 +108,14 @@ namespace math_common{
   
   } // insertInRowFromLeftSide
 
-  void insertSubMatrixInMatrixTopLeft(esdmat& target,const esdmat& source) {
-    TRACE(15,"insertSubMatrixInMatrixTopLeft()");
-    assert(source.cols()<=target.cols());
-    assert(source.rows()<=target.rows());
+  // void insertSubMatrixInMatrixTopLeft(esdmat& target,const esdmat& source) {
+  //   TRACE(15,"insertSubMatrixInMatrixTopLeft()");
+  //   assert(source.cols()<=target.cols());
+  //   assert(source.rows()<=target.rows());
     
-    vtriplet tr=math_common::getTriplets(source);
-
-
-  }
+  //   vtriplet tr=math_common::getTriplets(source);
+  // }
   
-  // vtriplet getTriplets(const esdmat & mat){
-  //   //only for ColMajor Sparse Matrix
-  //   assert(mat.rows()==mat.cols());
-  //   int size=mat.rows();
-  //   int i,j,currOuterIndex,nextOuterIndex;
-  //   vtriplet tripletList;
-  //   tripletList.reserve(mat.nonZeros());
-  //   for(j=0; j<size; j++){
-  //     currOuterIndex = mat.outerIndexPtr()[j];
-  //     nextOuterIndex = mat.outerIndexPtr()[j+1];
-
-  //     for(int a = currOuterIndex; a<nextOuterIndex; a++){
-  // 	i=mat.innerIndexPtr()[a];
-  // 	if(i < 0) continue;
-  // 	if(i >= size) break;
-  // 	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
-  //     } // inner for
-  //   } // for
-  //   return tripletList;
-  // } // getTriplets
   vtriplet getTriplets(const esdmat & mat){
     //only for ColMajor Sparse Matrix
     vtriplet tripletlist;
@@ -182,6 +160,8 @@ namespace math_common{
   }
 
   void shiftTriplets(vtriplet& triplets,int nrows,int ncols){
+    // shift the position of the values in a matrix. nrows and ncols
+    // can be negative numbers.
     TRACE(15,"shiftTriplets()");
     us size=triplets.size();
     for(us j=0;j<size;j++){
@@ -189,7 +169,13 @@ namespace math_common{
       const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
     }
   }
-  
+  void zeroOutRow(vtriplet& triplets,us rownr){
+    TRACE(15,"zeroOutRow()");
+    us size=triplets.size();
+    for(us i=0;i<rownr;i++)
+      if(triplets.at(i).row()==(int) rownr)
+        WARN("Not yet working!");
+  }  
   void multiplyTriplets(vtriplet& triplets,d factor){
     TRACE(15,"multiplyTriplets()");
     us size=triplets.size();
