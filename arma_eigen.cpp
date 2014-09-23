@@ -14,6 +14,8 @@ namespace math_common{
 
     us r,c;			// Current row, column
     // TRACE(1,"n_nonzero:"<< n_nonzero);
+    typedef Eigen::Triplet<d> triplet;
+    
     vector<triplet> tr; tr.reserve(n_nonzero);
     // TRACE(1,"ncols:"<<ncols);
     // Data in the Armadillo sparse matrix is stored as a compressed
@@ -113,81 +115,9 @@ namespace math_common{
   //   assert(source.cols()<=target.cols());
   //   assert(source.rows()<=target.rows());
     
-  //   vtriplet tr=math_common::getTriplets(source);
+  //   TripletList tr=math_common::getTriplets(source);
   // }
   
-  vtriplet getTriplets(const esdmat & mat){
-    //only for ColMajor Sparse Matrix
-    vtriplet tripletlist;
-    tripletlist.reserve(mat.nonZeros());
-    for (int k=0; k<mat.outerSize(); ++k){
-      for (Eigen::SparseMatrix<double>::InnerIterator it(mat,k); it; ++it)
-	{
-	  it.value();
-	  it.row(); // row index
-	  it.col(); // col index (here it is equal to k)
-	  it.index(); // inner index, here it is equal to it.row()
-	  tripletlist.push_back(triplet(it.row(),it.col(),it.value()));
-	}
-    }
-    
-    return tripletlist;
-  } // getTriplets
-
-  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols){
-    assert(startrow+nrows <= (us) mat.rows());
-    assert(startcol+ncols <= (us) mat.cols());
-    us Mj,Mi,i,j,currOuterIndex,nextOuterIndex;
-    vtriplet tripletList;
-    tripletList.reserve(mat.nonZeros());
-
-    for(j=0; j<ncols; j++){
-      Mj=j+startcol;
-      currOuterIndex = mat.outerIndexPtr()[Mj];
-      nextOuterIndex = mat.outerIndexPtr()[Mj+1];
-
-      for(us a = currOuterIndex; a<nextOuterIndex; a++){
-	Mi=mat.innerIndexPtr()[a];
-
-	if(Mi < startrow) continue;
-	if(Mi >= startrow + nrows) break;
-
-	i=Mi-startrow;    
-	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
-      }
-    }
-    return tripletList;
-  }
-
-  void shiftTriplets(vtriplet& triplets,int nrows,int ncols){
-    // shift the position of the values in a matrix. nrows and ncols
-    // can be negative numbers.
-    TRACE(15,"shiftTriplets()");
-    us size=triplets.size();
-    for(us j=0;j<size;j++){
-      const_cast<int&>(triplets[j].col())=triplets[j].col()+ncols;
-      const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
-    }
-  }
-  void zeroOutRow(vtriplet& triplets,us rownr){
-    TRACE(15,"zeroOutRow()");
-    us size=triplets.size();
-    for(us i=0;i<rownr;i++)
-      if(triplets.at(i).row()==(int) rownr)
-        WARN("Not yet working!");
-  }  
-  void multiplyTriplets(vtriplet& triplets,d factor){
-    TRACE(15,"multiplyTriplets()");
-    us size=triplets.size();
-    for(us j=0;j<size;j++){
-      const_cast<d&>(triplets[j].value())=triplets[j].value()*factor;
-    }
-  }
-  void reserveExtraDofs(vtriplet& trip,us n){
-    TRACE(15,"reserveExtraDofs()");
-    us cursize=trip.size();
-    trip.reserve(cursize+n);
-  }
   
   
 } // namespace math_common

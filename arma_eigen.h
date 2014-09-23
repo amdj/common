@@ -9,8 +9,6 @@
 #include <Eigen/Dense>
 
 typedef Eigen::SparseMatrix<double> esdmat; // declares a column-major sparse matrix type of double
-typedef Eigen::Triplet<double> triplet;
-typedef std::vector<triplet> vtriplet;
 typedef Eigen::VectorXd evd;
 typedef Eigen::MatrixXd edmat;
 
@@ -37,15 +35,6 @@ namespace math_common{
   
   // Insert components at the topleft of the target matrix
   void insertSubMatrixInMatrixTopLeft(esdmat& target,esdmat& submat);
-  vtriplet getTriplets(const esdmat& mat);
-  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols);
-  void shiftTriplets(vtriplet& triplets,int nrows,int ncols); // Shift
-  // position of triplets a certain number of rows and cols.
-  void zeroOutRow(vtriplet&,us rownr);
-  
-  void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
-  void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
-
 
   // class anneTriplets{
   //   vd values;
