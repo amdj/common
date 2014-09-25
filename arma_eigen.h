@@ -9,15 +9,12 @@
 #include <Eigen/Dense>
 
 typedef Eigen::SparseMatrix<double> esdmat; // declares a column-major sparse matrix type of double
-typedef Eigen::Triplet<double> triplet;
-typedef std::vector<triplet> vtriplet;
 typedef Eigen::VectorXd evd;
 typedef Eigen::MatrixXd edmat;
 
 
 namespace math_common{
   SPOILNAMESPACE
-  using Eigen::ComputationInfo;
   
   // These functions all make copies of the vectors. If you do not
   // want copies, we can use the view functions, as defined below
@@ -28,8 +25,8 @@ namespace math_common{
   vd EigenToArma(const evd& Evd);	// And back to Armadillo
 
   // Functions for creating "views" for the buffers
-  dmat armaView(esdmat& EigenMat);	// 
-  vd armaView(evd& Eigenvec);
+  dmat armaView(edmat EigenMat);	// 
+  vd armaView(const evd& Eigenvec);
 
   // inline Eigen::Map<Eigen::VectorXd> eigenMap(double* data,us size) { return Eigen::Map<Eigen::VectorXd>(data,size); }
 
@@ -38,15 +35,7 @@ namespace math_common{
   
   // Insert components at the topleft of the target matrix
   void insertSubMatrixInMatrixTopLeft(esdmat& target,esdmat& submat);
-  vtriplet getTriplets(const esdmat& mat);
-  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols);
-  void shiftTriplets(vtriplet& triplets,int nrows,int ncols); // Shift
-  // position of triplets a certain number of rows and cols.
 
-  void multiplyTriplets(vtriplet& triplets,d multiplicationfactor);
-  void reserveExtraDofs(vtriplet& trip,us n); // Add to capacity
-
-  evd solvesys_eigen(const esdmat& K,const evd& f);
   // class anneTriplets{
   //   vd values;
   //   arma::Col<us> rows;

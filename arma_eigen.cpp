@@ -14,6 +14,8 @@ namespace math_common{
 
     us r,c;			// Current row, column
     // TRACE(1,"n_nonzero:"<< n_nonzero);
+    typedef Eigen::Triplet<d> triplet;
+    
     vector<triplet> tr; tr.reserve(n_nonzero);
     // TRACE(1,"ncols:"<<ncols);
     // Data in the Armadillo sparse matrix is stored as a compressed
@@ -88,8 +90,9 @@ namespace math_common{
   dmat armaView(edmat Eigenmat)  {
     return dmat(Eigenmat.data(),Eigenmat.rows(),Eigenmat.cols(),false,false);
   }
-  vd armaView(evd& vec)  {
-    return vd(vec.data(),vec.rows(),false,false);
+  vd armaView(const evd& vec)  {
+    d* data=const_cast<d*>(vec.data()); // Filthy hack
+    return vd(data,vec.rows(),false,false);
   }
   
   void insertInRowFromLeftSide(esdmat& Mat,const vd& data,us rownr){
@@ -107,146 +110,23 @@ namespace math_common{
   
   } // insertInRowFromLeftSide
 
-  void insertSubMatrixInMatrixTopLeft(esdmat& target,const esdmat& source) {
-    TRACE(15,"insertSubMatrixInMatrixTopLeft()");
-    assert(source.cols()<=target.cols());
-    assert(source.rows()<=target.rows());
+  // void insertSubMatrixInMatrixTopLeft(esdmat& target,const esdmat& source) {
+  //   TRACE(15,"insertSubMatrixInMatrixTopLeft()");
+  //   assert(source.cols()<=target.cols());
+  //   assert(source.rows()<=target.rows());
     
-    vtriplet tr=math_common::getTriplets(source);
-
-
-  }
+  //   TripletList tr=math_common::getTriplets(source);
+  // }
   
-  // vtriplet getTriplets(const esdmat & mat){
-  //   //only for ColMajor Sparse Matrix
-  //   assert(mat.rows()==mat.cols());
-  //   int size=mat.rows();
-  //   int i,j,currOuterIndex,nextOuterIndex;
-  //   vtriplet tripletList;
-  //   tripletList.reserve(mat.nonZeros());
-  //   for(j=0; j<size; j++){
-  //     currOuterIndex = mat.outerIndexPtr()[j];
-  //     nextOuterIndex = mat.outerIndexPtr()[j+1];
-
-  //     for(int a = currOuterIndex; a<nextOuterIndex; a++){
-  // 	i=mat.innerIndexPtr()[a];
-  // 	if(i < 0) continue;
-  // 	if(i >= size) break;
-  // 	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
-  //     } // inner for
-  //   } // for
-  //   return tripletList;
-  // } // getTriplets
-  vtriplet getTriplets(const esdmat & mat){
-    //only for ColMajor Sparse Matrix
-    vtriplet tripletlist;
-    tripletlist.reserve(mat.nonZeros());
-    for (int k=0; k<mat.outerSize(); ++k){
-      for (Eigen::SparseMatrix<double>::InnerIterator it(mat,k); it; ++it)
-	{
-	  it.value();
-	  it.row(); // row index
-	  it.col(); // col index (here it is equal to k)
-	  it.index(); // inner index, here it is equal to it.row()
-	  tripletlist.push_back(triplet(it.row(),it.col(),it.value()));
-	}
-    }
-    
-    return tripletlist;
-  } // getTriplets
-
-  vtriplet getTripletsBlock(const esdmat& mat,us startrow,us startcol,us nrows,us ncols){
-    assert(startrow+nrows <= (us) mat.rows());
-    assert(startcol+ncols <= (us) mat.cols());
-    us Mj,Mi,i,j,currOuterIndex,nextOuterIndex;
-    vtriplet tripletList;
-    tripletList.reserve(mat.nonZeros());
-
-    for(j=0; j<ncols; j++){
-      Mj=j+startcol;
-      currOuterIndex = mat.outerIndexPtr()[Mj];
-      nextOuterIndex = mat.outerIndexPtr()[Mj+1];
-
-      for(us a = currOuterIndex; a<nextOuterIndex; a++){
-	Mi=mat.innerIndexPtr()[a];
-
-	if(Mi < startrow) continue;
-	if(Mi >= startrow + nrows) break;
-
-	i=Mi-startrow;    
-	tripletList.push_back(triplet(i,j,mat.valuePtr()[a]));
-      }
-    }
-    return tripletList;
-  }
-
-  void shiftTriplets(vtriplet& triplets,int nrows,int ncols){
-    TRACE(15,"shiftTriplets()");
-    us size=triplets.size();
-    for(us j=0;j<size;j++){
-      const_cast<int&>(triplets[j].col())=triplets[j].col()+ncols;
-      const_cast<int&>(triplets[j].row())=triplets[j].row()+nrows;
-    }
-  }
-  void multiplyTriplets(vtriplet& triplets,d factor){
-    TRACE(15,"multiplyTriplets()");
-    us size=triplets.size();
-    for(us j=0;j<size;j++){
-      const_cast<d&>(triplets[j].value())=triplets[j].value()*factor;
-    }
-  }
-  void reserveExtraDofs(vtriplet& trip,us n){
-    TRACE(15,"reserveExtraDofs()");
-    us cursize=trip.size();
-    trip.reserve(cursize+n);
-  }
-  evd solvesys_eigen(const esdmat& K,const evd& f) {
-    TRACE(15,"Eigen solver used for large system");
-    // Solve a linear system using Eigen sparse
-    // Form: K*x=f
-    assert(f.size()>0);
-
-    // Eigen::SimplicialCholesky<esdmat,Eigen::COLAMDOrdering<int> > solver(jac); // Werkt niet...
-    // Eigen::SimplicialCholesky<esdmat,3 > solver(jac2); // Werkt niet...    
-    // Eigen::SimplicialLDLT<esdmat> solver(jac2);
-    // Eigen::SparseQR<esdmat,Eigen::COLAMDOrdering<int> > solver(jac2);      
-    // matrix
-    // cout << "f:\n"<<f;
-    // cout << "Matrix k:"<< K << "\n";
-    // Eigen::FullPivLU<edmat> dec(K);
-    TRACE(19,"Initializing solver...");    
-    // Eigen::SparseQR<esdmat,Eigen::COLAMDOrdering<int> > solver(K);
-    Eigen::SparseLU<esdmat,Eigen::COLAMDOrdering<int> > solver(K);
-
-    switch(solver.info()){
-    case ComputationInfo::InvalidInput:
-      cout << "Solver initialization failed: invalid input" << "\n";
-      throw(0);
-    case ComputationInfo::NumericalIssue:
-      cout << "Solver initialization failed: numerical issue" << "\n";
-      throw(0);
-    case ComputationInfo::NoConvergence:
-      cout << "Solver initialization failed: no convergence" << "\n";
-      throw(0);
-      
-    } // switch
-    cout << "Logarithm of absolute value of determinant of matrix: "<<solver.logAbsDeterminant() <<"\n";
-    // Eigen::BiCGSTAB<Eigen::SparseMatrix<double> > solver(K);
-    // cout << "Logarithm of absolute value of determinant of matrix: "<<solver.logAbsDeterminant() <<"\n";
-    
-    // solver.setMaxIterations(500);
-    
-    TRACE(19,"Solving linear system...");    
-    evd x=solver.solve(f);
-    // std::cout << "#iterations: " << solver.iterations() << std::endl;
-    // std::cout << "estimated error: " << solver.error() << std::endl;
-
-    TRACE(19,"Solving linear system done.");    
-    return x;    
-  }
   
   
 } // namespace math_common
+
+
+
+
+
+
 
 
 
