@@ -28,9 +28,10 @@ namespace gases {
     Gas& operator=(const Gas& other);
     d Rs() const; 
     ~Gas();
+    void setGas(const string&);
+    const string& getGas() const {return type;}
 
    private:
-    void setGas(string);
     gas* m=NULL;
     string type;
 

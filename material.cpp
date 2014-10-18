@@ -3,35 +3,32 @@
 namespace gases {
 
   Gas::Gas(){
-    WARN("Gas initiated, but type not set! We set default to air.");
     m=new air();
   }
   Gas::Gas(string mattype){
-    m=NULL;
     setGas(mattype);
   }
   Gas::Gas(const Gas& other):Gas(other.type){}
   Gas& Gas::operator=(const Gas& other){
-    delete m;
     setGas(other.type);
     return *this;
   }
-  void Gas::setGas(string mattype)
+  void Gas::setGas(const string& mattype)
   {
-    TRACE(1,"Gas constructor entered.");
-    type=mattype;
-    if(type.compare("air")==0)
+    TRACE(15,"Gas::setGas("<<mattype<<")");
+    if(mattype.compare("air")==0)
       {
-	TRACE(1,"Gas type selected is air");
-	m=new air();
+        TRACE(15,"Gas type selected is air");
+        m=new air();
+        type=mattype;
       }
-    else if(type.compare("helium")==0){
-      TRACE(1,"Gas type selected is helium");
+    else if(mattype.compare("helium")==0){
+      TRACE(15,"Gas type selected is helium");
       m=new helium();
+      type=mattype;
     }
     else{
-      WARN("Gas type not understood. Exiting.");
-      exit(1);
+      WARN("Gas type not understood. Doing nothing. Type stays: " << type);
     }
   }
   d Gas::Rs() const { return m->Rsval();}
