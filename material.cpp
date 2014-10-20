@@ -3,7 +3,7 @@
 namespace gases {
 
   Gas::Gas(){
-    m=new air();
+    setGas("air");
   }
   Gas::Gas(string mattype){
     setGas(mattype);
@@ -15,6 +15,7 @@ namespace gases {
   }
   void Gas::setGas(const string& mattype)
   {
+    delete m;
     TRACE(15,"Gas::setGas("<<mattype<<")");
     if(mattype.compare("air")==0)
       {
