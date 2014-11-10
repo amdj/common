@@ -15,7 +15,6 @@
 // Some header files I (almost) always need
 #include <iostream>
 #include <iomanip>
-#include <stdio.h>
 #include <vector>		// C++ std vector
 #include <string>		// C++ string class
 #include <complex>
