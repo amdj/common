@@ -18,6 +18,7 @@ SET_TARGET_PROPERTIES(math_common PROPERTIES COMPILE_FLAGS
 
 # math_common should be linked to armadillo
 include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/gas
   ${CMAKE_CURRENT_SOURCE_DIR}/bessel
   ${CMAKE_CURRENT_SOURCE_DIR}/solid

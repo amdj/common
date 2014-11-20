@@ -68,6 +68,7 @@
      int TRACERNAME=MAXTRACELEVEL;
 
    #define TRACE(l,a) WRITETRACE(l+TRACERPLUS,"TRACE - " << (l) <<  " - " << annestr(TRACERNAME) << " - " << POS << a)
+#define VARTRACE(l,a) TRACE(l,#a " = " << a)
 
    #define inittrace(ll)								\
      std::cout << "inittrace with tracelevel " << ll << " for " << annestr(TRACERNAME) << "\n"; \
