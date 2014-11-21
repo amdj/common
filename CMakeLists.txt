@@ -7,9 +7,10 @@ set (math_common_SRC
   material.cpp
   gas/gas.cpp
   solid/solid.cpp
-  bessel/bessel.cpp
+  special/bessel.cpp
+  special/skewsine.cpp
   rottfuncs/rottfuncs.cpp
-  bessel/cbessj.cpp)
+  special/cbessj.cpp)
 
 add_library(math_common ${math_common_SRC})
 
@@ -20,7 +21,7 @@ SET_TARGET_PROPERTIES(math_common PROPERTIES COMPILE_FLAGS
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/gas
-  ${CMAKE_CURRENT_SOURCE_DIR}/bessel
+  ${CMAKE_CURRENT_SOURCE_DIR}/special
   ${CMAKE_CURRENT_SOURCE_DIR}/solid
   ${CMAKE_CURRENT_SOURCE_DIR}/rottfuncs
   ${CMAKE_CURRENT_SOURCE_DIR}/fsolve  
