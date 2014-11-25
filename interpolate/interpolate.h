@@ -47,5 +47,11 @@ namespace math_common{
 // 		gsl_spline* spline;
 // };
 
+
+  template <typename T>
+  T linearInterpolate(const T& left,const T& right,d relpos){
+    return left+(right-left)*relpos;
+  }
+  
 }
 #endif // INTERPOLATE_H
