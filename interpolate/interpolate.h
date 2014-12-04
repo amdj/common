@@ -10,7 +10,7 @@
 
 
 namespace math_common{
-
+  SPOILNAMESPACE;
 // using std::ifstream;
 
 // class data{
