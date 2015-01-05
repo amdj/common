@@ -2,15 +2,15 @@
 
 namespace math_common{
 
-  esdmat ArmaToEigen(const sdmat& amat){ // Conversion from Armadillo
+  esdmat ArmaToEigen(const sdmat& armamat){ // Conversion from Armadillo
     TRACE(1,"ArmaToEigen(sdmat&)");
-    const d* vals=amat.values;
-    us n_nonzero=amat.n_nonzero;
-    us ncols=amat.n_cols;
-    us nrows=amat.n_rows;
-    
-    arma::Col<us> col_ptrs(amat.col_ptrs,ncols);
-    arma::Col<us> row_indices(amat.row_indices,n_nonzero);
+    const d* vals=armamat.values;
+    us n_nonzero=armamat.n_nonzero;
+    long long unsigned ncols=armamat.n_cols;
+    long long unsigned nrows=armamat.n_rows;
+    using arma::uword;
+    arma::Col<uword> col_ptrs(armamat.col_ptrs,ncols);
+    arma::Col<uword> row_indices(armamat.row_indices,n_nonzero);
 
     us r,c;			// Current row, column
     // TRACE(1,"n_nonzero:"<< n_nonzero);
