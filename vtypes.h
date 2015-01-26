@@ -68,6 +68,7 @@ typedef unsigned us;		  /* Size type I always use */
   typedef arma::mat44 dmat44;	  /* .. and so on */				\
   typedef arma::cx_vec4 vc4;							\
   typedef arma::vec4 vd4;							\
+  typedef arma::vec3 vd3;							\
   typedef arma::cx_mat22 cmat22;						\
   typedef arma::mat22 dmat22;							\
   typedef arma::cx_vec2 vc2;							\
