@@ -6,12 +6,9 @@
 #include "vtypes.h"
 #include <tuple>
 
-
-
 namespace math_common{
 
   SPOILNAMESPACE
-
 
   typedef std::tuple<dmat,vd>  dmatvectuple;
   typedef std::tuple<cmat,vc>  cmatvectuple;

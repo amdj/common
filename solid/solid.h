@@ -1,9 +1,33 @@
 #pragma once
+#ifndef SOLID_H
+#define SOLID_H
 
-#include <vtypes.h>
+#include "vtypes.h"
 
 namespace solids{
   SPOILNAMESPACE
+  class Solidmat;
+
+  class Solid{
+  public:
+    Solid(string type);
+    Solid(const Solid&);
+    Solid& operator=(const Solid&);
+    vd kappa(const vd& T) const;
+    d kappa(const d& T) const;
+    vd cs(const vd& T) const;
+    d cs(const d& T) const;
+    vd rho(const vd& T) const;
+    d rho(const d& T) const;
+    ~Solid();
+  protected:
+    Solidmat *sol;
+    string solidstring;
+  private:
+  };
+
+
+
   class Solidmat{
   public:
     Solidmat() {}
@@ -59,7 +83,5 @@ namespace solids{
     d rho(const d& T) const {return 1445.0-0.085*T;}
   };
 
-
-
-
 } //namespace solids
+#endif /* SOLID_H */
