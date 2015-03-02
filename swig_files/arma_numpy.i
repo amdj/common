@@ -10,9 +10,10 @@
   #include "arma_numpy.h"
 %}
 
+
 /* Call import_array() on loading module*/
 %init%{
-  std::cout << "Import array called" << std::endl;
+  // std::cout << "Import array called" << std::endl;
   import_array();
 %}
 
@@ -21,6 +22,7 @@
 class vd{
  public:
   virtual ~vd();
+  d operator()(us);
 };
 
 typedef double d;
@@ -33,42 +35,46 @@ typedef unsigned us;
 {
   $1 = (PyFloat_Check($input) || PyInt_Check($input) || PyLong_Check($input)) ? 1 : 0;
 }
-%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) vd,vd&,
-					const vd&
+%typecheck(SWIG_TYPECHECK_COMPLEX)
+c,c&,const c &
 {
-  $1=PyArray_Check($input);
+  $1 = (PyComplex_Check($input) ) ? 1 : 0;
 }
-
-
+%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) vd,vd&,const vd&{
+  $1=PyArray_FROMANY($input,NPY_DOUBLE,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
+  // if($1)
+  //   cout << "Its a float array!\n";
+}
+%typecheck(1091) vc,vc&,const vc& {
+  $1=PyArray_FROMANY($input,NPY_COMPLEX128,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
+  // if($1)
+  //   cout << "Its a complex array!\n";
+ }
 
 %typemap(in) vd& (vd temp) {
-  std::cout << "Making aray..." << std::endl;
-  PyArrayObject* arr = (PyArrayObject*) PyArray_FROM_OTF($input, NPY_DOUBLE, NPY_IN_ARRAY);
-  if(arr==NULL)
-    return NULL;
-  std::cout << "Making array done..." << std::endl;
-  std::cout << "Getting ndims..." << std::endl;
-  int ndims=PyArray_NDIM(arr);
-  std::cout << "Got ndims..." << std::endl;
-  if(ndims!=1){
-    PyErr_SetString(PyExc_TypeError,"Number of dimensions not equal to 1");
-    return NULL;
-  }
-  // std::cout << "Checked for number of dims." << std::endl;
-  temp=vd_from_npy(arr);
-  
-  // std::cout << "test" << std::endl;
-  // // std::cout << "Temp built." << std::endl;
-  // std::cout << temp << std::endl;
+  temp=vd_from_npy_nocpy((PyArrayObject*) $input);
+  $1=&temp;
+}
+%typemap(in) vc& (vc temp) {
+  cout << "Vc run\n";
+  temp=vc_from_npy_nocpy((PyArrayObject*) $input);
   $1=&temp;
 }
 
 %typemap(out) vd {
-  std::cout << "Returning object.." << std::endl;
   $result=npy_from_vd($1);
+}
+%typemap(out) vc {
+  $result=npy_from_vc($1);
 }
 %typemap(out) vd& {
   const vd& res=*$1;
   $result=npy_from_vd(res);
+}
+%typemap(out) dmat22 {
+  $result=npy_from_dmat22($1);
+}
+%typemap(out) cmat22 {
+  $result=npy_from_cmat22($1);
 }
 

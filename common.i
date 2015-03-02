@@ -1,18 +1,38 @@
-%module gas
+%module common
 %{
   #define PY_ARRAY_UNIQUE_SYMBOL npy_array
+  #include "rottfuncs.h"
   #include "gas.h"
+  #include "solid.h"
 %}
 %include "std_string.i"
 %include "arma_numpy.i"
- // Test
+%include "std_complex.i"
+typedef std::string string;
+typedef std::complex<double> c;
+
+namespace rottfuncs{
+  using std::string;
+
+  class RottFuncs {		// Thermoviscous Rott functions
+  public:
+    RottFuncs(const string& cshape);
+    ~RottFuncs();
+    vc fx(const vd& rh_over_delta) const;
+    vc fx(const vc& rh_over_delta) const;
+    c fx(const c& rh_over_delta) const;
+    c fx(const d& rh_over_delta) const;
+    string getCShape() const;
+  };
+
+} // namespace rottfuncs
 
 
 namespace gases {
-
+  using std::string;
   class Gas{
   public:
-    Gas(std::string type="air");
+    Gas(string type="air");
     Gas(const Gas& other);
     ~Gas();
 
@@ -51,3 +71,18 @@ namespace gases {
 
 } /* namespace gases */
 
+namespace solids{
+
+  class Solid{
+  public:
+    Solid(string type);
+    Solid(const Solid&);
+    vd kappa(const vd& T) const;
+    d kappa(const d& T) const;
+    vd cs(const vd& T) const;
+    d cs(const d& T) const;
+    vd rho(const vd& T) const;
+    d rho(const d& T) const;
+    ~Solid();
+  };
+} // namespace solids

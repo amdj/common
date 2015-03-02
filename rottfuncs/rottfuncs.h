@@ -31,10 +31,11 @@ namespace rottfuncs{
     void setFptr(const string& cshape);
     string cshape;
   public:
-    RottFuncs();
+    RottFuncs(const string& cshape);
+    RottFuncs();                // Uses inviscid
     RottFuncs(const RottFuncs& other);
     RottFuncs& operator=(const RottFuncs&);
-    RottFuncs(const string& cshape);
+    ~RottFuncs(){}
     vc fx(const vd& rh_over_delta) const {return f_ptr((1.0+0.0*I)*rh_over_delta);}
     vc fx(const vc& rh_over_delta) const {return f_ptr(rh_over_delta);}
     c fx(const c& rh_over_delta) const {return f_ptrc(rh_over_delta);}
