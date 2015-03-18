@@ -3,7 +3,7 @@
 namespace solids{
   //Stainless steel
   //Container class
-  Solid::Solid(string name){
+  Solid::Solid(const string& name){
     TRACE(3,"solid constructor called");
     solidstring=name;
     if(name.compare("stainless")==0){

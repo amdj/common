@@ -19,13 +19,12 @@ namespace gases {
   // Wrapper class of type gas. Introduce a whole bunch of forwarding methods 
   class Gas{
   public:
-    Gas(string type="air");
+    Gas(const string& type="air");
     Gas(const Gas& other);
     Gas& operator=(const Gas& other);
     ~Gas();
+    operator string() const {return type;}
     void setGas(const string&);
-    const string& getGas() const {return type;}
-
    private:
     perfectgas* m=nullptr;
     string type="air";

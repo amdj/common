@@ -10,8 +10,9 @@ namespace solids{
 
   class Solid{
   public:
-    Solid(string type);
+    Solid(const string& type="stainless");
     Solid(const Solid&);
+    operator string() const {return solidstring;}
     Solid& operator=(const Solid&);
     vd kappa(const vd& T) const;
     d kappa(const d& T) const;

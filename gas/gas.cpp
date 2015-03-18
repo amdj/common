@@ -2,7 +2,7 @@
 
 namespace gases {
 
-  Gas::Gas(string mattype){
+  Gas::Gas(const string& mattype){
     setGas(mattype);
   }
   Gas::Gas(const Gas& other):Gas(other.type){}
