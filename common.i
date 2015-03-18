@@ -1,5 +1,6 @@
 %module common
 %{
+  #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
   #define PY_ARRAY_UNIQUE_SYMBOL npy_array
   #include "rottfuncs.h"
   #include "gas.h"
@@ -12,7 +13,7 @@ typedef std::string string;
 typedef std::complex<double> c;
 
 namespace rottfuncs{
-  using std::string;
+
 
   class RottFuncs {		// Thermoviscous Rott functions
   public:
@@ -29,7 +30,7 @@ namespace rottfuncs{
 
 
 namespace gases {
-  using std::string;
+
   class Gas{
   public:
     Gas(string type="air");

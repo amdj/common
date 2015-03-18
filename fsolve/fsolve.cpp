@@ -2,7 +2,7 @@
 #include <math.h>
 
 namespace math_common{
-
+  using std::abs;
   vd fsolve(const vd& guess,vdfun& f){
     TRACE(0,"fsolve ");
     //Newton-Raphson implementation

@@ -14,7 +14,7 @@
 #ifdef DEBUG_GAS
 #define checkzero(x)				\
   TRACE(-1,"Divide by zero testing entered.");	\
-  try {if(min(abs(x))<1e-13) throw 0; }		\
+  try {if(min(abs(x))<1e-13) throw 0; }    \
   catch(int a){					\
     TRACE(0,"Divide by zero encountered.");	\
   }

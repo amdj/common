@@ -37,6 +37,7 @@ typedef unsigned us;		  /* Size type I always use */
 //Spoiling global namespace with often used functions and variables 
 #define SPOILNAMESPACE								\
   using std::cout; /* Output to stdout */					\
+  using std::abs;
   using std::endl;								\
   using std::setprecision;							\
   using std::setiosflags;							\
