@@ -1,6 +1,6 @@
 %module common
 %{
-  #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+  #define SWIG_FILE_WITH_INIT
   #define PY_ARRAY_UNIQUE_SYMBOL npy_array
   #include "rottfuncs.h"
   #include "gas.h"
@@ -13,8 +13,6 @@ typedef std::string string;
 typedef std::complex<double> c;
 
 namespace rottfuncs{
-
-
   class RottFuncs {		// Thermoviscous Rott functions
   public:
     RottFuncs(const string& cshape);

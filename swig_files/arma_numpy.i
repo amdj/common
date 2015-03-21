@@ -1,5 +1,6 @@
 %module arma_numpy
 %{
+  // #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
   #define PY_ARRAY_UNIQUE_SYMBOL npy_array
   #include <numpy/ndarrayobject.h>
   /* #define NO_IMPORT_ARRAY */
