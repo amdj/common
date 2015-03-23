@@ -36,6 +36,8 @@ SET_TARGET_PROPERTIES(math_common PROPERTIES COMPILE_FLAGS
 
 set_source_files_properties(common.i PROPERTIES CPLUSPLUS ON)
 set_source_files_properties(arma_numpy.i PROPERTIES CPLUSPLUS ON)
+set_source_files_properties(swig_files/arma_numpy.cpp  PROPERTIES COMPILE_FLAGS
+  " -Wno-#warnings")
 
 
 # This does work
@@ -43,7 +45,7 @@ set(SWIG_MODULE_common_EXTRA_DEPS swig_files/arma_numpy.i)
 
 
 swig_add_module(common python common.i)
-set_source_files_properties( ${swig_generated_file_fullname}
-      PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers")
 swig_link_libraries(common math_common ${PYTHON_LIBRARIES} ${ARMADILLO_LIBRARIES})
+set_source_files_properties( ${swig_generated_file_fullname}
+      PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers -Wno-self-assign -Wno-#warnings")
 
