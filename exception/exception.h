@@ -8,12 +8,12 @@
 #pragma once
 #ifndef EXCEPTION_H
 #define EXCEPTION_H 1
-
+#include <string>
 #include <stdexcept>
 
 class MyError : public std::runtime_error {
 public:
-  MyError(const string& msg = "") : runtime_error(msg) {}
+  MyError(const std::string& msg = "") : runtime_error(msg) {}
 };
 
 
