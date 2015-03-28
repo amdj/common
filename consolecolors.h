@@ -4,7 +4,7 @@
 #define _CONSOLECOLORS_H_
 
 #include <iostream>
-
+#ifndef SWIG
 #define red "\e[31m"
 #define green "\e[32m"
 #define def " \e[39m"
@@ -17,6 +17,8 @@
         // BG_GREEN    = 42,
         // BG_BLUE     = 44,
         // BG_DEFAULT  = 49
+#endif
+
 inline void clearConsole(){
   std::cout << "\033c";
 }
