@@ -23,7 +23,6 @@ namespace math_common{
   const c sq2=sqrt(2.0);
   const c sqmI=sqrt(-1.0*I);
 
-
   // Compute the central derivative at position x(i). Warning: for equidistant grids
   // only!
   template <class T>

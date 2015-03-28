@@ -21,10 +21,6 @@
 #include <armadillo>		// Our linear algebra package
 #include <functional>
 
-#ifndef ANNE_WARNINGS
-#define ANNE_WARNINGS 1
-#endif
-
 // I need these numbers so often, that they can be in the global namespace
 const std::complex<double> I(0,1); //Complex unity
 const std::complex<double> minI(0,-1); //Minus complex unity
