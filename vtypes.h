@@ -24,7 +24,7 @@
 // I need these numbers so often, that they can be in the global namespace
 const std::complex<double> I(0,1); //Complex unity
 const std::complex<double> minI(0,-1); //Minus complex unity
-#define number_pi (arma::datum::pi) // The number 3.14159265359..
+const double number_pi=arma::datum::pi; // The number 3.14159265359..
 
 typedef unsigned us;		  /* Size type I always use */
 
