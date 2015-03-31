@@ -30,7 +30,7 @@ namespace solids{
   }
   Solid::Solid(const Solid& other): Solid(other.solidstring){}
   Solid& Solid::operator=(const Solid& other){
-    if(sol!=NULL)
+    if(sol!=nullptr)
       delete sol;
     Solid(other.solidstring);
     return *this;

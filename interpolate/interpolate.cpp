@@ -22,7 +22,7 @@ namespace math_common{
 // 			for(us j=0;j<ncols;j++){
 // 				subline=line.substr(j*spacepos,spacepos);
 // 				//cout << "j:" << j << ", subline:" << subline << endl;
-// 				vdata[j].push_back(std::strtod(&subline[0],NULL));
+// 				vdata[j].push_back(std::strtod(&subline[0],nullptr));
 // 				//if(j==0){ cout << spacepos <<endl; }
 // 			}
 // 			//prn("line:",counter);

@@ -20,12 +20,12 @@ PyObject *npy_from_vd(const vd &in) {
   // This code should be improved massively?
   if (size == 0) {
     std::cout << "Size is zero!\n";
-    return NULL;
+    return nullptr;
   }
   PyArrayObject *array =
       (PyArrayObject *)PyArray_SimpleNew(1, dims, NPY_DOUBLE);
-  if (array == NULL) {
-    return NULL;
+  if (array == nullptr) {
+    return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
   mempcpy(pydat, in.memptr(), size * sizeof(double));
@@ -39,13 +39,13 @@ PyObject *npy_from_vc(const vc &in) {
   // This code should be improved massively?
   if (size == 0) {
     std::cout << "Size is zero!\n";
-    return NULL;
+    return nullptr;
   }
   PyArrayObject *array =
       (PyArrayObject *)PyArray_SimpleNew(1, dims, NPY_COMPLEX128);
-  if (array == NULL) {
+  if (array == nullptr) {
     std::cout << "Array is null" << std::endl;
-    return NULL;
+    return nullptr;
   }
   npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
   mempcpy(pydat, in.memptr(), size * sizeof(npy_cdouble));
@@ -86,9 +86,9 @@ PyObject *npy_from_dmat22(const dmat22 &in) {
 
   PyArrayObject *array =
       (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
-  if (array == NULL) {
+  if (array == nullptr) {
     std::cout << "Array is null" << std::endl;
-    return NULL;
+    return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
   mempcpy(pydat, in.memptr(), 4 * sizeof(double));
@@ -99,9 +99,9 @@ PyObject *npy_from_cmat22(const cmat22 &in) {
 
   PyArrayObject *array =
       (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_COMPLEX128);
-  if (array == NULL) {
+  if (array == nullptr) {
     std::cout << "Array is null" << std::endl;
-    return NULL;
+    return nullptr;
   }
   npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
   mempcpy(pydat, in.memptr(), 4 * sizeof(npy_cdouble));
