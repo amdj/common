@@ -86,6 +86,11 @@ namespace math_common{
     vd result(&Evd[0],size);
     return result;
   }
+  dmat EigenToArma(const edmat& eigmat){
+    us rows=eigmat.rows();
+    us cols=eigmat.cols();    
+    return dmat(&eigmat(0,0),rows,cols);
+  }
 
   dmat armaView(edmat Eigenmat)  {
     return dmat(Eigenmat.data(),Eigenmat.rows(),Eigenmat.cols(),false,false);

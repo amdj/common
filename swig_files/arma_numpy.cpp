@@ -94,6 +94,20 @@ PyObject *npy_from_dmat22(const dmat22 &in) {
   mempcpy(pydat, in.memptr(), 4 * sizeof(double));
   return (PyObject*)array;
 }
+PyObject *npy_from_dmat(const dmat &in) {
+  
+  npy_intp dims[2] = {(npy_intp) in.n_rows,(npy_intp) in.n_cols};
+  npy_intp size=(npy_intp) in.n_rows*in.n_cols;
+  PyArrayObject *array =
+      (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  if (array == nullptr) {
+    std::cout << "Array is null" << std::endl;
+    return nullptr;
+  }
+  double *pydat = (double *)PyArray_DATA(array);
+  mempcpy(pydat, in.memptr(), size*sizeof(double));
+  return (PyObject*)array;
+}
 PyObject *npy_from_cmat22(const cmat22 &in) {
   npy_intp dims[2] = {2,2};
 

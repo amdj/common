@@ -72,6 +72,9 @@ c,c&,const c &
   const vd& res=*$1;
   $result=npy_from_vd(res);
 }
+%typemap(out) dmat {
+  $result=npy_from_dmat($1);
+ }
 %typemap(out) dmat22 {
   $result=npy_from_dmat22($1);
 }

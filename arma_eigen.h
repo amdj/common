@@ -23,7 +23,7 @@ namespace math_common{
   evd ArmaToEigen(const vd& avd);		// Same for vectors
   // sdmat EigenToArma() // Not yet included
   vd EigenToArma(const evd& Evd);	// And back to Armadillo
-
+  dmat EigenToArma(const edmat& emat);	// And back to Armadillo
   // Functions for creating "views" for the buffers
   dmat armaView(edmat EigenMat);	// 
   vd armaView(const evd& Eigenvec);
