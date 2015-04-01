@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.1)
 
 set (math_common_SRC
   math_common.cpp
+  math_common_tracer.cpp
   fsolve/fsolve.cpp
   arma_eigen.cpp 
   gas/gas.cpp
@@ -30,9 +31,8 @@ include_directories(
 
 add_library(math_common ${math_common_SRC})
 target_link_libraries(math_common ${ARMADILLO_LIBRARIES})
-
-SET_TARGET_PROPERTIES(math_common PROPERTIES COMPILE_FLAGS
-  "-DTRACERNAME=mathcommonlogger")
+# add_definitions(-DTRACERNAME=mathcommonlogger -DTRACER=0)
+add_definitions(-DTRACERNAME=mathcommonlogger)
 
 set_source_files_properties(common.i PROPERTIES CPLUSPLUS ON)
 set_source_files_properties(arma_numpy.i PROPERTIES CPLUSPLUS ON)

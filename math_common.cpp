@@ -1,6 +1,5 @@
 #include "math_common.h"
 
-TRACETHIS
 namespace math_common{
   
 

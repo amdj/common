@@ -81,15 +81,18 @@ namespace math_common{
     return result;
   }
   vd EigenToArma(const evd& Evd){
+    TRACE(10,"Eigen to arma for vector");
     us size=Evd.rows();
     
     vd result(&Evd[0],size);
     return result;
   }
   dmat EigenToArma(const edmat& eigmat){
+    TRACE(10,"Eigen to arma for matrix");
     us rows=eigmat.rows();
     us cols=eigmat.cols();    
-    return dmat(&eigmat(0,0),rows,cols);
+    dmat res(&eigmat(0,0),rows,cols);
+    return res;
   }
 
   dmat armaView(edmat Eigenmat)  {

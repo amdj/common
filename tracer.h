@@ -51,6 +51,9 @@
 #define BUILDINTRACELEVEL (-10)
 #endif
 
+#define TRACETHIS                               \
+  int TRACERNAME=MAXTRACELEVEL;
+
 #if TRACER == 1
 
    extern int TRACERNAME;
@@ -64,10 +67,8 @@
        if(l>=TRACERNAME)				\
          std::cout << a << "\n"; 
 
-   #define TRACETHIS		\
-     int TRACERNAME=MAXTRACELEVEL;
 
-   #define TRACE(l,a) WRITETRACE(l+TRACERPLUS,"TRACE - " << (l) <<  " - " << annestr(TRACERNAME) << " - " << POS << a)
+#define TRACE(l,a) WRITETRACE(l+TRACERPLUS,annestr(TRACERNAME) << "-" << (l)<< "-" << POS << a)
 #define VARTRACE(l,a) TRACE(l,#a " = " << a)
 
    #define inittrace(ll)								\
@@ -81,11 +82,11 @@
 
 #else  // TRACER !=1
 
-   #define TRACETHIS
    #define TRACE(l,a)
    #define inittrace(a)
    #define initothertrace(a,mylogger)
 #endif	// ######################################## TRACER ==1
+
 
 #endif	// LOGGER_H
 

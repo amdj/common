@@ -85,7 +85,7 @@ PyObject *npy_from_dmat22(const dmat22 &in) {
   npy_intp dims[2] = {2,2};
 
   PyArrayObject *array =
-      (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+    (PyArrayObject *)PyArray_EMPTY(2, dims, NPY_DOUBLE,true);
   if (array == nullptr) {
     std::cout << "Array is null" << std::endl;
     return nullptr;
@@ -94,14 +94,15 @@ PyObject *npy_from_dmat22(const dmat22 &in) {
   mempcpy(pydat, in.memptr(), 4 * sizeof(double));
   return (PyObject*)array;
 }
+// Convert Armadillo matrix to Numpy Array
 PyObject *npy_from_dmat(const dmat &in) {
-  
+  // dmat in=in2.t();
   npy_intp dims[2] = {(npy_intp) in.n_rows,(npy_intp) in.n_cols};
   npy_intp size=(npy_intp) in.n_rows*in.n_cols;
-  PyArrayObject *array =
-      (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
-  if (array == nullptr) {
-    std::cout << "Array is null" << std::endl;
+  // Last 
+  PyObject* array = PyArray_EMPTY(2, dims, NPY_DOUBLE, true);
+  if (!array || !PyArray_ISFORTRAN(array)) {
+    std::cout << "Array creation failed" << std::endl;
     return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
@@ -112,7 +113,7 @@ PyObject *npy_from_cmat22(const cmat22 &in) {
   npy_intp dims[2] = {2,2};
 
   PyArrayObject *array =
-      (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_COMPLEX128);
+    (PyArrayObject *)PyArray_EMPTY(2, dims, NPY_COMPLEX128,true);
   if (array == nullptr) {
     std::cout << "Array is null" << std::endl;
     return nullptr;
