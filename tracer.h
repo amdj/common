@@ -81,7 +81,7 @@
      mylogger=ll;
 
 #else  // TRACER !=1
-
+   #define VARTRACE(l,a) 
    #define TRACE(l,a)
    #define inittrace(a)
    #define initothertrace(a,mylogger)
