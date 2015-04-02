@@ -36,10 +36,7 @@ namespace gases {
     vd rho(const vd& T,const d& p) const {return m->rho(T,p);}
     vd rho(const vd& T,const vd& p) const {return m->rho(T,p);}
     vd p(const vd& T,const vd& rho) const {return m->p(T,rho);}
-    vd cp(const vd& T) const {
-      std::cout << "T:" << std::endl;
-      std::cout << "T:"<<T << std::endl;
-      return m->cp(T);}
+    vd cp(const vd& T) const { return m->cp(T);}
     vd pr(const vd& T) const {return m->pr(T);}
     vd h(const vd& T) const {return m->h(T);}
     vd cv(const vd& T) const {return m->cv(T);}
