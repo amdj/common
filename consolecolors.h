@@ -20,7 +20,7 @@
 #endif
 
 inline void clearConsole(){
-  std::cout << "\033c";
+  std::cout << "\033c" << std::endl;
 }
 
 #endif /* _CONSOLECOLORS_H_ */
