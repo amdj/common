@@ -22,13 +22,13 @@ find_package(Armadillo REQUIRED)
 
 ############################## Optimized code flags
 # set(CMAKE_CXX_FLAGS " -O3 ")
-# set(CMAKE_CXX_FLAGS " -O2 ")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mtune=native -fopenmp")
+set(CMAKE_CXX_FLAGS " -O2 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mtune=native -fopenmp")
 # set(CMAKE_CLANG "${CMAKE_GCC} -march=native -mtune=native -fopenmp")
 
-# add_definitions(-DNDEBUG)	#This is for BOOST functions, and to disable assertions!
-# add_definitions(-DTRACER=0)
-# add_definitions(-DEIGEN_NO_DEBUG -DARMA_NO_DEBUG)
+add_definitions(-DNDEBUG)	#This is for BOOST functions, and to disable assertions!
+add_definitions(-DTRACER=0)
+add_definitions(-DEIGEN_NO_DEBUG -DARMA_NO_DEBUG)
 
 # Debug mode
 # set(CMAKE_GCC "${CMAKE_GCC} -g -ggdb")
