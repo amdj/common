@@ -1,6 +1,6 @@
 #Configure logger
 cmake_minimum_required (VERSION 3.1)
-project(Math_common)
+project(Common)
 
 # Extra cmake modules to find packages
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_tools)
@@ -13,6 +13,7 @@ find_package(PythonLibs REQUIRED)
 # Initialize swig
 find_package(SWIG REQUIRED)
 include(${SWIG_USE_FILE})
+SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 # Eigen
 find_package(Eigen3 REQUIRED)
@@ -63,7 +64,7 @@ SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/ src)
-# math_common should be linked to armadillo
+# common should be linked to armadillo
 include_directories(
   ${PYTHON_INCLUDE_PATH}
   ${EIGEN3_INCLUDE_DIR}
@@ -71,9 +72,9 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src # The source code
   )
 
-# The Math_common library
-add_library(math_common ${src})
-target_link_libraries(math_common ${ARMADILLO_LIBRARIES})
+# The common library
+add_library(common ${src})
+target_link_libraries(common ${ARMADILLO_LIBRARIES})
 
 set_source_files_properties(src/swig/common.i PROPERTIES CPLUSPLUS ON)
 set_source_files_properties(src/swig/arma_numpy.i PROPERTIES CPLUSPLUS ON)
@@ -83,7 +84,10 @@ set_source_files_properties(src/arma_numpy.cpp  PROPERTIES COMPILE_FLAGS
 set(SWIG_MODULE_common_EXTRA_DEPS src/swig/arma_numpy.i)
 
 swig_add_module(common python src/swig/common.i)
-swig_link_libraries(common math_common ${PYTHON_LIBRARIES} ${ARMADILLO_LIBRARIES})
+swig_link_libraries(common common
+  ${PYTHON_LIBRARIES}
+  ${ARMADILLO_LIBRARIES}
+)
 set_source_files_properties( ${swig_generated_file_fullname}
       PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers -Wno-self-assign -Wno-#warnings")
 
