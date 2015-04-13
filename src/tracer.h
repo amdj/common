@@ -17,7 +17,7 @@
 #define POS FILEWITHOUTPATH << ":" << __LINE__ <<  ": "
 // End not so interesting part
 
-#define RAWWARNING(a) cout << red << a << def << "\n";
+#define RAWWARNING(a) std::cout << red << a << def << "\n";
 #define WARN(a) RAWWARNING(POS << "WARNING: " << a)
 #define FATAL(a) WARN(a); abort(); 
 
