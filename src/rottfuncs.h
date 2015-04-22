@@ -1,8 +1,9 @@
 #pragma once
-#include <vtypes.h>
+#include "vtypes.h"
 
 
 namespace rottfuncs{
+  #ifndef SWIG
   SPOILNAMESPACE
   const c sqI=sqrt(I);
   const c sq2=sqrt(2.0);
@@ -24,7 +25,7 @@ namespace rottfuncs{
     TRACE(0,"f_blapprox()");
     return (1.0-I)/rh_over_delta/2.0;
   }
-    
+  #endif
   class RottFuncs {		// Thermoviscous Rott functions
     vc (*f_ptr)(const vc& rh_over_delta);
     c (*f_ptrc)(const c& rh_over_delta);
@@ -34,9 +35,13 @@ namespace rottfuncs{
     RottFuncs(const string& cshape);
     RottFuncs();                // Uses inviscid
     RottFuncs(const RottFuncs& other);
+    #ifndef SWIG
     RottFuncs& operator=(const RottFuncs&);
+    #endif
     ~RottFuncs(){}
+    #ifndef SWIG
     vc fx(const vd& rh_over_delta) const {return f_ptr((1.0+0.0*I)*rh_over_delta);}
+    #endif
     vc fx(const vc& rh_over_delta) const {return f_ptr(rh_over_delta);}
     c fx(const c& rh_over_delta) const {return f_ptrc(rh_over_delta);}
     c fx(const d& rh_over_delta) const {c n(rh_over_delta,0); return f_ptrc(n);}

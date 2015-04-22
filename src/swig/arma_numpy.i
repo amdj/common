@@ -35,22 +35,53 @@ c,c&,const c &
 }
 %typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) vd,vd&,const vd&{
   $1=PyArray_FROMANY($input,NPY_DOUBLE,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
-  // if($1)
-  //   cout << "Its a float array!\n";
 }
-%typecheck(1091) vc,vc&,const vc& {
+%typecheck(1092) vc,vc&,const vc& {
   $1=PyArray_FROMANY($input,NPY_COMPLEX128,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
   // if($1)
   //   cout << "Its a complex array!\n";
  }
+%typecheck(1091) vc2,vc2&,const vc2& {
+  PyArrayObject pyar=PyArray_FROMANY($input,NPY_COMPLEX128,1,1,NPY_ARRAY_C_CONTIGUOUS);
+  if(pyarr){
+    npy_intp size=PyArray_DIMS(pyar)[0]; // Extract first
+    if(size==2)
+      $1=1;
+    else
+      $1=0;
+  }
+  else{
+    $1=0;
+  }
+}
+%typecheck(1091) vd2,vd2&,const vd2& {
+  PyArrayObject pyar=PyArray_FROMANY($input,NPY_DOUBLE,1,1,NPY_ARRAY_C_CONTIGUOUS);
+  if(pyarr){
+    npy_intp size=PyArray_DIMS(pyar)[0]; // Extract first
+    if(size==2)
+      $1=1;
+    else
+      $1=0;
+  }
+  else{
+    $1=0;
+  }
+}
 
 %typemap(in) vd& (vd temp) {
   temp=vd_from_npy_nocpy((PyArrayObject*) $input);
   $1=&temp;
 }
 %typemap(in) vc& (vc temp) {
-  cout << "Vc run\n";
   temp=vc_from_npy_nocpy((PyArrayObject*) $input);
+  $1=&temp;
+}
+%typemap(in) vd2& (vd2 temp) {
+  temp=vd2_from_npy((PyArrayObject*) $input);
+  $1=&temp;
+}
+%typemap(in) vc2& (vc2 temp) {
+  temp=vc2_from_npy((PyArrayObject*) $input);
   $1=&temp;
 }
 

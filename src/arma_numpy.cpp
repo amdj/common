@@ -64,6 +64,13 @@ vd vd_from_npy_nocpy(const PyArrayObject *const in) {
   vd result((double*)pydata,size,false,false);
   return result;
 }
+vc vc_from_npy_nocpy(const PyArrayObject *const in) {
+  npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
+  npy_cdouble *pydata = (npy_cdouble*)PyArray_DATA(in);
+  vc result((c*)pydata,size,false,false);
+  return result;
+}
+
 vc vc_from_npy(const PyArrayObject *const in) {
   npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
   // std::cout << "Test2" << std::endl;
@@ -73,10 +80,20 @@ vc vc_from_npy(const PyArrayObject *const in) {
   memcpy(result.memptr(),pydata,size*sizeof(npy_cdouble));
   return result;
 }
-vc vc_from_npy_nocpy(const PyArrayObject *const in) {
+
+
+vc2 vc2_from_npy(const PyArrayObject *const in) {
   npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
-  npy_cdouble *pydata = (npy_cdouble*)PyArray_DATA(in);
-  vc result((c*)pydata,size,false,false);
+  npy_cdouble *pydata = (npy_cdouble *)PyArray_DATA(in);
+  vc2 result;
+  memcpy(result.memptr(),pydata,size*sizeof(npy_cdouble));
+  return result;
+}
+vd2 vd2_from_npy(const PyArrayObject *const in) {
+  npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
+  npy_double *pydata = (npy_double *)PyArray_DATA(in);
+  vd2 result;
+  memcpy(result.memptr(),pydata,size*sizeof(npy_double));
   return result;
 }
 

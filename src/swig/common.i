@@ -13,20 +13,7 @@
 typedef std::string string;
 typedef std::complex<double> c;
 
-namespace rottfuncs{
-  class RottFuncs {		// Thermoviscous Rott functions
-  public:
-    RottFuncs(const string& cshape);
-    ~RottFuncs();
-    vc fx(const vc& rh_over_delta) const;
-    // vc fx(const vd& rh_over_delta) const;
-    c fx(const c& rh_over_delta) const;
-    c fx(const d& rh_over_delta) const;
-    string getCShape() const;
-  };
-
-} // namespace rottfuncs
-
+%include "rottfuncs.h"
 
 namespace gases {
 
