@@ -4,4 +4,4 @@ Created on March 31, 2014
 
 @author: anne
 '''
-from .common import Solid,Gas
+from .common import *

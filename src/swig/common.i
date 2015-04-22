@@ -6,6 +6,7 @@
   #include "gas.h"
   #include "solid.h"
 %}
+%include "consolecolors.h"
 %include "std_string.i"
 %include "arma_numpy.i"
 %include "std_complex.i"
@@ -17,8 +18,8 @@ namespace rottfuncs{
   public:
     RottFuncs(const string& cshape);
     ~RottFuncs();
-    vc fx(const vd& rh_over_delta) const;
     vc fx(const vc& rh_over_delta) const;
+    // vc fx(const vd& rh_over_delta) const;
     c fx(const c& rh_over_delta) const;
     c fx(const d& rh_over_delta) const;
     string getCShape() const;

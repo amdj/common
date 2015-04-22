@@ -18,14 +18,6 @@
   import_array();
 %}
 
-// A better way is the following
-// Convert from numpy to vd and vice versa
-class vd{
- public:
-  virtual ~vd();
-  d operator()(us);
-};
-
 typedef double d;
 typedef unsigned us;
 
@@ -71,6 +63,10 @@ c,c&,const c &
 %typemap(out) vd& {
   const vd& res=*$1;
   $result=npy_from_vd(res);
+}
+%typemap(out) vc& {
+  const vc& res=*$1;
+  $result=npy_from_vc(res);
 }
 %typemap(out) dmat {
   $result=npy_from_dmat($1);
