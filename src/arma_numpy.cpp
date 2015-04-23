@@ -52,6 +52,7 @@ PyObject *npy_from_vd2(const vd2 &in) {
   return PyArray_Return(array);
 }
 PyObject *npy_from_vc2(const vc2 &in) {
+  TRACE(0,"npy_from_vc2(vc&)");
   long int size = 2;
   npy_intp dims[1] = {size};
 
@@ -71,6 +72,8 @@ PyObject *npy_from_vc2(const vc2 &in) {
   return PyArray_Return(array);
 }
 PyObject *npy_from_vc(const vc &in) {
+  TRACE(0,"npy_from_vc(vc&)");
+  std::cout << "npy_from_vc" << std::endl;
   long int size = in.size();
   npy_intp dims[1] = {size};
 
@@ -100,14 +103,13 @@ vd vd_from_npy(const PyArrayObject *const in) {
 vd vd_from_npy_nocpy(const PyArrayObject *const in) {
   npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
   double *pydata = (double *)PyArray_DATA(in);
-  vd result((double*)pydata,size,false,false);
-  return result;
+  return vd((double*)pydata,size,false,false);
 }
 vc vc_from_npy_nocpy(const PyArrayObject *const in) {
+  TRACE(0,"vc_from_npy_nocpy");
   npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
   npy_cdouble *pydata = (npy_cdouble*)PyArray_DATA(in);
-  vc result((c*)pydata,size,false,false);
-  return result;
+  return vc((c*)pydata,size,false,false);
 }
 
 vc vc_from_npy(const PyArrayObject *const in) {

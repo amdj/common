@@ -14,7 +14,7 @@
 
 /* Call import_array() on loading module*/
 %init%{
-  // std::cout << "Import array called" << std::endl;
+  TRACE(2, "Import array called");
   import_array();
 %}
 
@@ -29,53 +29,61 @@ typedef unsigned us;
   $1 = (PyFloat_Check($input) || PyInt_Check($input) || PyLong_Check($input)) ? 1 : 0;
 }
 %typecheck(SWIG_TYPECHECK_COMPLEX)
-c,c&,const c &
+     c,c&,const c &
 {
   $1 = (PyComplex_Check($input) ) ? 1 : 0;
 }
 %typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) vd,vd&,const vd&{
-  $1=PyArray_FROMANY($input,NPY_DOUBLE,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
+  TRACE(2,"Check if it is a double array...");
+  $1=(PyArray_Check($input) &&
+      (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE) &&
+      (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
+  if($1){
+    TRACE(2,"Is is a double array.");
+  }
 }
 %typecheck(1092) vc,vc&,const vc& {
-  $1=PyArray_FROMANY($input,NPY_COMPLEX128,1,1,NPY_ARRAY_C_CONTIGUOUS)?1:0;
-  // if($1)
-  //   cout << "Its a complex array!\n";
+  TRACE(2,"Check if it is a complex array..");
+  $1=(PyArray_Check($input) &&
+      (PyArray_TYPE((PyArrayObject*) $input)==NPY_COMPLEX128) &&
+      (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
+  if($1){
+    TRACE(2,"Is is a complex array..");
+  }
  }
-%typecheck(1091) vc2,vc2&,const vc2& {
-  PyArrayObject pyar=PyArray_FROMANY($input,NPY_COMPLEX128,1,1,NPY_ARRAY_C_CONTIGUOUS);
-  if(pyarr){
-    npy_intp size=PyArray_DIMS(pyar)[0]; // Extract first
-    if(size==2)
-      $1=1;
-    else
-      $1=0;
-  }
-  else{
-    $1=0;
+%typecheck(1094) vd2,vd2&,const vd2& {
+  TRACE(2,"Check if it is a double array of size 2...");
+  $1=(PyArray_Check($input) &&
+      (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE) &&
+      (PyArray_NDIM((PyArrayObject*) $input)==1) &&
+      (PyArray_DIMS((PyArrayObject*) $input)[0]==2)
+      )?1:0;
+  if($1){
+    TRACE(2,"Is is a double array of size 2..");
   }
 }
-%typecheck(1091) vd2,vd2&,const vd2& {
-  PyArrayObject pyar=PyArray_FROMANY($input,NPY_DOUBLE,1,1,NPY_ARRAY_C_CONTIGUOUS);
-  if(pyarr){
-    npy_intp size=PyArray_DIMS(pyar)[0]; // Extract first
-    if(size==2)
-      $1=1;
-    else
-      $1=0;
-  }
-  else{
-    $1=0;
+%typecheck(1093) vc2,vc2&,const vc2& {
+  TRACE(2,"Check if it is a complex array of size 2...");
+  $1=(PyArray_Check($input) &&
+      (PyArray_TYPE((PyArrayObject*) $input)==NPY_COMPLEX128) &&
+      (PyArray_NDIM((PyArrayObject*) $input)==1) &&
+      (PyArray_DIMS((PyArrayObject*) $input)[0]==2)
+      )?1:0;
+  if($1){
+    TRACE(2,"Is is a complex array of size 2..");
   }
 }
-
 %typemap(in) vd& (vd temp) {
   temp=vd_from_npy_nocpy((PyArrayObject*) $input);
   $1=&temp;
 }
+%typemap(in) vd=vd&;
 %typemap(in) vc& (vc temp) {
+  TRACE(2,"Converting array to vc...");
   temp=vc_from_npy_nocpy((PyArrayObject*) $input);
-  $1=&temp;
+  $1=&temp; 
 }
+%typemap(in) vc=vc&;
 %typemap(in) vd2& (vd2 temp) {
   temp=vd2_from_npy((PyArrayObject*) $input);
   $1=&temp;
@@ -86,16 +94,20 @@ c,c&,const c &
 }
 
 %typemap(out) vd {
+  TRACE(2,"vd to numpy");
   $result=npy_from_vd($1);
 }
 %typemap(out) vc {
+  TRACE(2,"vc to numpy");
   $result=npy_from_vc($1);
 }
 %typemap(out) vd& {
+  TRACE(2,"vd& to numpy\n");
   const vd& res=*$1;
   $result=npy_from_vd(res);
 }
 %typemap(out) vc& {
+  TRACE(2,"vc& to numpy\n");
   const vc& res=*$1;
   $result=npy_from_vc(res);
 }

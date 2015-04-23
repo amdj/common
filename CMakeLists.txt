@@ -28,7 +28,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mtune=native -fopenmp")
 # set(CMAKE_CLANG "${CMAKE_GCC} -march=native -mtune=native -fopenmp")
 
 add_definitions(-DNDEBUG)	#This is for BOOST functions, and to disable assertions!
-add_definitions(-DTRACER=0)
+# add_definitions(-DTRACER=0)
 add_definitions(-DEIGEN_NO_DEBUG -DARMA_NO_DEBUG)
 
 # Debug mode
@@ -64,7 +64,7 @@ SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/ src)
-# common should be linked to armadillo
+
 include_directories(
   ${PYTHON_INCLUDE_PATH}
   ${EIGEN3_INCLUDE_DIR}
@@ -73,8 +73,7 @@ include_directories(
   )
 
 # The common library
-add_library(common ${src})
-target_link_libraries(common ${ARMADILLO_LIBRARIES})
+add_library(common_src ${src})
 
 set_source_files_properties(src/swig/common.i PROPERTIES CPLUSPLUS ON)
 set_source_files_properties(src/swig/arma_numpy.i PROPERTIES CPLUSPLUS ON)
@@ -84,7 +83,8 @@ set_source_files_properties(src/arma_numpy.cpp  PROPERTIES COMPILE_FLAGS
 set(SWIG_MODULE_common_EXTRA_DEPS src/swig/arma_numpy.i)
 
 swig_add_module(common python src/swig/common.i)
-swig_link_libraries(common common
+# common should be linked to armadillo
+swig_link_libraries(common common_src
   ${PYTHON_LIBRARIES}
   ${ARMADILLO_LIBRARIES}
 )

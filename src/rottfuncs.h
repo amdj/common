@@ -39,10 +39,18 @@ namespace rottfuncs{
     RottFuncs& operator=(const RottFuncs&);
     #endif
     ~RottFuncs(){}
-    #ifndef SWIG
-    vc fx(const vd& rh_over_delta) const {return f_ptr((1.0+0.0*I)*rh_over_delta);}
-    #endif
-    vc fx(const vc& rh_over_delta) const {return f_ptr(rh_over_delta);}
+    vc fx(const vc& rh_over_delta) const {
+      TRACE(5,"fx vc");
+      std::cout << "blat vc" << std::endl;
+      std::cout << annestr(TRACERNAME);
+      return f_ptr(rh_over_delta);
+    }
+    vc fx(const vd& rh_over_delta) const {
+      TRACE(5,"fx vd");
+      std::cout << "blat vd" << std::endl;
+      return f_ptr((1.0+0.0*I)*rh_over_delta);
+    }
+
     c fx(const c& rh_over_delta) const {return f_ptrc(rh_over_delta);}
     c fx(const d& rh_over_delta) const {c n(rh_over_delta,0); return f_ptrc(n);}
     string getCShape() const {return cshape;}
