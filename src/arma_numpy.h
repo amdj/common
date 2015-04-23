@@ -15,7 +15,9 @@
 
 SPOILNAMESPACE
 PyObject* npy_from_vd(const vd& armavec);
+PyObject* npy_from_vd2(const vd2& armavec);
 PyObject* npy_from_vc(const vc& armavec);
+PyObject* npy_from_vc2(const vc2& armavec);
 
 vd vd_from_npy(PyArrayObject const * const);
 vc vc_from_npy(PyArrayObject const * const);

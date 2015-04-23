@@ -32,6 +32,44 @@ PyObject *npy_from_vd(const vd &in) {
 
   return PyArray_Return(array);
 }
+PyObject *npy_from_vd2(const vd2 &in) {
+  long int size = 2;
+  npy_intp dims[1] = {size};
+
+  // This code should be improved massively?
+  if (size == 0) {
+    std::cout << "Size is zero!\n";
+    return nullptr;
+  }
+  PyArrayObject *array =
+      (PyArrayObject *)PyArray_SimpleNew(1, dims, NPY_DOUBLE);
+  if (array == nullptr) {
+    return nullptr;
+  }
+  double *pydat = (double *)PyArray_DATA(array);
+  mempcpy(pydat, in.memptr(), size * sizeof(double));
+
+  return PyArray_Return(array);
+}
+PyObject *npy_from_vc2(const vc2 &in) {
+  long int size = 2;
+  npy_intp dims[1] = {size};
+
+  // This code should be improved massively?
+  if (size == 0) {
+    std::cout << "Size is zero!\n";
+    return nullptr;
+  }
+  PyArrayObject *array =
+      (PyArrayObject *)PyArray_SimpleNew(1, dims, NPY_COMPLEX128);
+  if (array == nullptr) {
+    return nullptr;
+  }
+  npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
+  mempcpy(pydat, in.memptr(), size * sizeof(c));
+
+  return PyArray_Return(array);
+}
 PyObject *npy_from_vc(const vc &in) {
   long int size = in.size();
   npy_intp dims[1] = {size};
@@ -51,6 +89,7 @@ PyObject *npy_from_vc(const vc &in) {
   mempcpy(pydat, in.memptr(), size * sizeof(npy_cdouble));
   return (PyObject*)array;
 }
+
 vd vd_from_npy(const PyArrayObject *const in) {
   npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
   double *pydata = (double *)PyArray_DATA(in);

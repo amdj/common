@@ -1,27 +1,19 @@
+// num_derivative.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
+//
+//////////////////////////////////////////////////////////////////////
 #pragma once
-#ifndef _MATH_COMMON_H_
-#define _MATH_COMMON_H_
+#ifndef NUM_DERIVATIVE_H
+#define NUM_DERIVATIVE_H
 
 #include <assert.h>
 #include "vtypes.h"
 #include <tuple>
 
 namespace math_common{
-
-  SPOILNAMESPACE
-
-  typedef std::tuple<dmat,vd>  dmatvectuple;
-  typedef std::tuple<cmat,vc>  cmatvectuple;
-  typedef std::function<dmatvectuple (const us,const vd&)> dmatvecfun;
-  typedef std::function<cmatvectuple (const us,const vc&)> cmatvecfun;
-
-  dmatvectuple RKsystem(const us i,const d h,const vd& yi,dmatvecfun Cdfun);
-  cmatvectuple RKsystem(const us i,const d h,const vc& yi,cmatvecfun Cdfun);
-
-  // These constants are so often used I implement them standardly
-  const c sqI=sqrt(I);
-  const c sq2=sqrt(2.0);
-  const c sqmI=sqrt(-1.0*I);
 
   // Compute the central derivative at position x(i). Warning: for equidistant grids
   // only!
@@ -58,4 +50,6 @@ namespace math_common{
 
 } //namespace math_common
 
-#endif /* _MATH_COMMON_H_ */
+
+#endif // NUM_DERIVATIVE_H
+//////////////////////////////////////////////////////////////////////

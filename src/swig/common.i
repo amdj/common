@@ -5,6 +5,7 @@
   #include "rottfuncs.h"
   #include "gas.h"
   #include "solid.h"
+  TRACETHIS
 %}
 %include "consolecolors.h"
 %include "std_string.i"
