@@ -41,13 +41,10 @@ namespace rottfuncs{
     ~RottFuncs(){}
     vc fx(const vc& rh_over_delta) const {
       TRACE(5,"fx vc");
-      std::cout << "blat vc" << std::endl;
-      std::cout << annestr(TRACERNAME);
       return f_ptr(rh_over_delta);
     }
     vc fx(const vd& rh_over_delta) const {
       TRACE(5,"fx vd");
-      std::cout << "blat vd" << std::endl;
       return f_ptr((1.0+0.0*I)*rh_over_delta);
     }
 
