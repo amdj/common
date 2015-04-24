@@ -39,15 +39,15 @@ namespace math_common {
            std::function<std::tuple<matT,vecT>(const us,const vecT&)> CdFun)
   {
     TRACE(5,"RK4system()");
-    d halfh=0.5*h;
-    matT I(fillwith::eye);     // Identity matrix
+    const d halfh=0.5*h;
+    const matT I(fillwith::eye);     // Identity matrix
 
     // K1
     matT kappa1; vecT lambda1;
     {
       std::tie(kappa1,lambda1)=CdFun(i,yi);
     }
-    vecT K1=kappa1*yi+lambda1;
+    const vecT K1=kappa1*yi+lambda1;
 
     // K2
     matT kappa2; vecT lambda2;
@@ -61,7 +61,7 @@ namespace math_common {
       kappa2=C2*(I+halfh*kappa1);
       lambda2=d2+C2*(halfh*lambda1);
     }
-    vecT K2=kappa2*yi+lambda2;
+    const vecT K2=kappa2*yi+lambda2;
 
     // K3
     matT kappa3; vecT lambda3;
@@ -74,7 +74,7 @@ namespace math_common {
       kappa3=C3*(I+halfh*kappa2);
       lambda3=d3+C3*(halfh*lambda2);
     }
-    vecT K3=kappa3*yi+lambda3;
+    const vecT K3=kappa3*yi+lambda3;
 
     // K4
     matT kappa4; vecT lambda4;
@@ -84,7 +84,7 @@ namespace math_common {
       kappa4=C4*(I+h*kappa3);
       lambda4=d4+C4*h*lambda3;
     }
-    vecT K4=kappa4*yi+lambda4;
+    const vecT K4=kappa4*yi+lambda4;
 
     matT K=I+(h/6.0)*(kappa1+2.0*(kappa2+kappa3)+kappa4);
     vecT l=(h/6.0)*(lambda1+2.0*(lambda2+lambda3)+lambda4);
@@ -101,32 +101,36 @@ namespace math_common {
            std::function<std::tuple<matT,vecT>(const us,const vecT&)> CdFun ) {
     TRACE(15,"solveRK4(x,y0,Cdfun)");
 
-    vecT yim1;
-    vecT yi=y0;
+
     us gp=x.size();
     vec res0(gp),res1(gp);
     res0(0)=y0(0);
     res1(0)=y0(1);
-    
     d h;                        // Grid distance
-    matT K(fillwith::eye); vecT R(fillwith::zeros);
-    for (us i=1;i<gp;i++){
-      yim1=yi;
+
+    vecT yi=y0;
+    vecT yip1;
+
+    matT T(fillwith::eye); vecT r(fillwith::zeros);
+    for (us i=0;i<gp-1;i++){
+
       // Update grid distance
-      h=x(i)-x(i-1);
-      matT Kim1; vecT lim1;
+      h=x(i+1)-x(i);
+      matT Ki; vecT li;
       // Obtain matrix and vector to compute new point
-      std::tie(Kim1,lim1)=RK4system(i-1,h,yim1,CdFun);
+      std::tie(Ki,li)=RK4system(i,h,yi,CdFun);
       // Update K,R
-      K*=Kim1;
-      R=(lim1+Kim1*R);
+      T*=Ki;
+      r=Ki*r+li;
       // Update result vector
-      yi=Kim1*yim1+lim1;
-      res0(i)=yi(0);
-      res1(i)=yi(1);
+      yip1=Ki*yi+li;
+      res0(i+1)=yip1(0);
+      res1(i+1)=yip1(1);
+
+      yi=yip1;
     }
 
-    return std::make_tuple(res0,res1,K,R);
+    return std::make_tuple(res0,res1,T,r);
   }
 
 }
