@@ -1,11 +1,10 @@
 #Configure logger
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 2.8)
 project(Common)
 
 # Extra cmake modules to find packages
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_tools)
 
-add_definitions(-DTRACERNAME=mathcommonlogger)
 
 # Require Python
 find_package(PythonLibs REQUIRED)
@@ -47,10 +46,7 @@ set(CMAKE_CLANG "${CMAKE_CLANG} -pipe -Wno-unknown-warning-option -Woverloaded-v
 # -Wno-return-local-addr -Wno-cpp \
 # ")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pipe -fPIC -Wall \
- -Wextra -Wno-unused-parameter \
- -Wno-unused-variable  \
- -Wno-address")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pipe -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-address")
 
 # set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_GCC}")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_GENERAL} ${CMAKE_CLANG}")

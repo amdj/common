@@ -120,10 +120,10 @@ namespace math_common {
       // Obtain matrix and vector to compute new point
       std::tie(Ki,li)=RK4system(i,h,yi,CdFun);
       // Update K,R
-      T*=Ki;
+      T=Ki*T;
       r=Ki*r+li;
       // Update result vector
-      yip1=Ki*yi+li;
+      yip1=T*y0+r;
       res0(i+1)=yip1(0);
       res1(i+1)=yip1(1);
 

@@ -73,7 +73,6 @@ PyObject *npy_from_vc2(const vc2 &in) {
 }
 PyObject *npy_from_vc(const vc &in) {
   TRACE(0,"npy_from_vc(vc&)");
-  std::cout << "npy_from_vc" << std::endl;
   long int size = in.size();
   npy_intp dims[1] = {size};
 

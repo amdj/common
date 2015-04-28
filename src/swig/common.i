@@ -6,6 +6,7 @@
   #include "gas.h"
   #include "solid.h"
   #include "settracer.h"
+  TRACETHIS
 %}
 %include "consolecolors.h"
 %include "std_string.i"
@@ -17,8 +18,7 @@ typedef std::complex<double> c;
 %include "rottfuncs.h"
 
 %include "settracer.h"
-extern int mathcommonlogger;
-%template(setmath_commonTracer) tracer::setTracer<mathcommonlogger>;
+%template(setTMTubesTracer_common) tracer::setTracer<TMTubesTracer>;
 
 namespace gases {
 
