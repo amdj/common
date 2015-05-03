@@ -90,6 +90,25 @@ namespace math_common {
     vecT l=(h/6.0)*(lambda1+2.0*(lambda2+lambda3)+lambda4);
     return std::make_tuple(K,l);
   }
+  // Forward Euler (simpler, for testing)
+  template<typename vecT,typename matT>
+  std::tuple<matT,vecT>
+  FEsystem(const us i,
+           const d h,
+           const vecT& yi,
+           std::function<std::tuple<matT,vecT>(const us,const vecT&)> CdFun)
+  {
+    TRACE(5,"FEsystem()");
+    const matT I(fillwith::eye);     // Identity matrix
+
+    // K1
+    matT kappa1; vecT lambda1;
+    std::tie(kappa1,lambda1)=CdFun(i,yi);
+
+    matT K=I+h*kappa1;
+    vecT l=h*lambda1;
+    return std::make_tuple(K,l);
+  }
 
 
   // Solve the system using RK4. Example:
