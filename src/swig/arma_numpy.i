@@ -38,18 +38,18 @@ typedef unsigned us;
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
-  if($1){
-    cout << "Is is a double array.\n";
-  }
+  // if($1){
+  //   cout << "Is is a double array.\n";
+  // }
 }
 %typecheck(1095) vc,vc&,const vc& {
   cout << "Check if it is a complex array..\n";
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_COMPLEX128) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
-  if($1){
-    cout << "Is is a complex array..\n";
-  }
+  // if($1){
+  //   cout << "Is is a complex array..\n";
+  // }
  }
 %typecheck(1094) vd2& {
   cout << "Check if it is a double array of size 2...\n";
@@ -58,9 +58,9 @@ typedef unsigned us;
       (PyArray_NDIM((PyArrayObject*) $input)==1) &&
       (PyArray_DIMS((PyArrayObject*) $input)[0]==2)
       )?1:0;
-  if($1){
-    cout << "Is is a double array of size 2..\n";
-  }
+  // if($1){
+  //   cout << "Is is a double array of size 2..\n";
+  // }
 }
 %typecheck(1093) vc2& {
   cout << "Check if it is a complex array of size 2...\n";
@@ -69,16 +69,16 @@ typedef unsigned us;
       (PyArray_NDIM((PyArrayObject*) $input)==1) &&
       (PyArray_DIMS((PyArrayObject*) $input)[0]==2)
       )?1:0;
-  if($1){
-    cout << "Is is a complex array of size 2..\n";
-  }
+  // if($1){
+  //   cout << "Is is a complex array of size 2..\n";
+  // }
 }
 %typemap(in) vd& (vd temp) {
   temp=vd_from_npy_nocpy((PyArrayObject*) $input);
   $1=&temp;
 }
 %typemap(in) vc& (vc temp) {
-  cout << "Converting array to vc...\n";
+  // cout << "Converting array to vc...\n";
   temp=vc_from_npy_nocpy((PyArrayObject*) $input);
   $1=&temp; 
 }
@@ -92,20 +92,20 @@ typedef unsigned us;
 }
 
 %typemap(out) vd {
-  cout << "vd to numpy\n";
+  // cout << "vd to numpy\n";
   $result=npy_from_vd($1);
 }
 %typemap(out) vc {
-  cout << "vc to numpy\n";
+  // cout << "vc to numpy\n";
   $result=npy_from_vc($1);
 }
 %typemap(out) vd& {
-  cout << "vd& to numpy\n\n";
+  // cout << "vd& to numpy\n\n";
   const vd& res=*$1;
   $result=npy_from_vd(res);
 }
 %typemap(out) vc& {
-  cout << "vc& to numpy\n\n";
+  // cout << "vc& to numpy\n\n";
   const vc& res=*$1;
   $result=npy_from_vc(res);
 }
