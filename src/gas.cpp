@@ -11,6 +11,7 @@
 #include "gas.h"
 #include "air.h"
 #include "helium.h"
+#include "nitrogen.h"
 
 namespace gases {
 
@@ -39,6 +40,11 @@ namespace gases {
     else if(mattype.compare("helium")==0){
       TRACE(15,"Gas type selected is helium");
       g=new Helium();
+      name=mattype;
+    }
+    else if(mattype.compare("nitrogen")==0){
+      TRACE(15,"Gas type selected is nitrogen");
+      g=new Nitrogen();
       name=mattype;
     }
     else{
