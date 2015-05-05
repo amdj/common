@@ -21,6 +21,9 @@ namespace gases {
   Gas::Gas(const string& mattype){
     setGas(mattype);
   }
+  Gas::~Gas() {
+    delete g;
+  }
   Gas& Gas::operator=(const Gas& other){
     setGas(other.name);
     return *this;
@@ -43,12 +46,6 @@ namespace gases {
       throw MyError("Invalid gas type");
     }
   }
-  Gas::~Gas() {
-    delete g;
-  }
-
-
-
 
 } // Namespace gases
 

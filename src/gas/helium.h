@@ -14,7 +14,7 @@ namespace gases {
   
   class Helium :public PerfectGas {
   public:
-    Helium():PerfectGas(){}
+    Helium():PerfectGas(){name="helium";}
     d Rs() const {return 2077;}
     d cp(d T) const { return 5195;}
     vd cp(const vd& T) const;

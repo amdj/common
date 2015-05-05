@@ -30,6 +30,12 @@ namespace gases {
   vd Air::h(const vd& T) const {
     return cpc[0]*T+0.5*cpc[1]*pow(T,2)+(1/3.0)*cpc[2]*pow(T,3)+cpc[3]*0.25*pow(T,4)+cpc[4]*(0.2)*pow(T,5);
   }
+  vd Air::cp(const vd& T) const {
+    return cpc[0]+cpc[1]*T+cpc[2]*pow(T,2)+cpc[3]*pow(T,3)+cpc[4]*pow(T,4);
+  }
+  d Air::cp(d T) const {
+    return cpc[0]+cpc[1]*T+cpc[2]*pow(T,2)+cpc[3]*pow(T,3)+cpc[4]*pow(T,4);
+  }
 
   vd Air::kappa(const vd& T) const {
     return kappac[0]+kappac[1]*T+kappac[2]*pow(T,2)+kappac[3]*pow(T,3)+kappac[4]*pow(T,4);

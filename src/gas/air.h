@@ -14,8 +14,8 @@ namespace gases {
   
   class Air : public PerfectGas {
   public:
-    Air():PerfectGas(){}
-    d Rs() const;
+    Air():PerfectGas(){name="air";}
+    d Rs() const {return 287;}
     d cp(d T) const;
     vd cp(const vd& T) const;
     d h(d T) const;
@@ -24,7 +24,7 @@ namespace gases {
     vd mu(const vd&) const;
     d kappa(d T) const;
     vd kappa(const vd& T) const;
-    virtual ~Air(){}
+    ~Air(){}
   };
 
   

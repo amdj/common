@@ -60,7 +60,7 @@ SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/ src)
-AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/gas src)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/gas src_gas)
 
 include_directories(
   ${PYTHON_INCLUDE_PATH}
@@ -71,7 +71,7 @@ include_directories(
   )
 
 # The common library
-add_library(common_src ${src})
+add_library(common_src ${src} ${src_gas})
 
 set_source_files_properties(src/swig/common.i PROPERTIES CPLUSPLUS ON)
 set_source_files_properties(src/swig/arma_numpy.i PROPERTIES CPLUSPLUS ON)

@@ -13,17 +13,20 @@
   }
     
 %}
-%include "consolecolors.h"
+void setCommonTracer(int);
+
 %include "std_string.i"
 %include "arma_numpy.i"
 %include "std_complex.i"
 typedef std::complex<double> c;
 typedef std::string string;
+
+// My exceptions
+%include "my_exceptions.i"
+ // Rott functions
 %include "rottfuncs.h"
-void setCommonTracer(int);
-
+ // Gas
 %include "gas.h"
-
 
 namespace solids{
 

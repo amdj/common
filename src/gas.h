@@ -1,26 +1,29 @@
+// gas.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
+//
+//////////////////////////////////////////////////////////////////////
 #pragma once
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#ifndef GAS_H
+#define GAS_H
 #include <string>
 #include <armadillo>
-/*
-Author: J.A. de Jong
-Last modified: March 12, 2014
-
-This header file can be used for computing two types of material
- properties: air and helium. TODO Mixtures of ideal gases have to be added
-
-*/
 
 namespace gases {
+  #ifndef SWIG
   typedef double d;
   typedef arma::Col<double> vd;
-  // Wrapper class of type gas. Introduce a whole bunch of forwarding methods 
+  #endif
+  #ifdef SWIG
+  %catches(std::exception,...) Gas::Gas(const std::string& type);
+  #endif
   class Gas{
     // This string should be overwritten!
-    std::string name="implementation";
     Gas* g=nullptr;
   protected:
+    std::string name;
     Gas();
   public:
     Gas(const std::string& type);
@@ -35,12 +38,12 @@ namespace gases {
     #endif
 
     // Finally defined:
-    virtual vd gamma(const vd& T) const {return g->cp(T)/g->cv(T);}
-    virtual vd pr(const vd& T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
-    virtual d pr(d T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
-    virtual d gamma(d T) const {return g->cp(T)/g->cv(T);}
+    vd gamma(const vd& T) const {return g->cp(T)/g->cv(T);}
+    vd pr(const vd& T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
+    d pr(d T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
+    d gamma(d T) const {return g->cp(T)/g->cv(T);}
 
-    // Virtutals which should be overridden
+    // Virtuals which should be overridden
     virtual d Rs() const {return g->Rs();}
     virtual vd rho(const vd& T,d p) const {return g->rho(T,p);}
     virtual vd rho(const vd& T,const vd& p) const {return g->rho(T,p);}
@@ -72,5 +75,5 @@ namespace gases {
 
 } /* namespace gases */
 
-
-#endif	//MATERIAL_H
+#endif // GAS_H
+//////////////////////////////////////////////////////////////////////
