@@ -1,6 +1,8 @@
 #pragma once
 #ifndef MATERIAL_H
 #define MATERIAL_H
+#include <string>
+#include <armadillo>
 /*
 Author: J.A. de Jong
 Last modified: March 12, 2014
@@ -10,55 +12,61 @@ This header file can be used for computing two types of material
 
 */
 
-#include "idealgas.h"
-#include "vtypes.h"
-
-
 namespace gases {
-  SPOILNAMESPACE
+  typedef double d;
+  typedef arma::Col<double> vd;
   // Wrapper class of type gas. Introduce a whole bunch of forwarding methods 
   class Gas{
+    // This string should be overwritten!
+    std::string name="implementation";
+    Gas* g=nullptr;
+  protected:
+    Gas();
   public:
-    Gas(const string& type="air");
+    Gas(const std::string& type);
     Gas(const Gas& other);
+    #ifndef SWIG
     Gas& operator=(const Gas& other);
-    ~Gas();
-    operator string() const {return type;}
-    void setGas(const string&);
-   private:
-    perfectgas* m=nullptr;
-    string type="air";
+    #endif
+    virtual ~Gas();
+    #ifndef SWIG
+    operator std::string() const {return name;}
+    void setGas(const std::string&);
+    #endif
 
-  public:
-    d Rs() const { return m->Rsval();}
+    // Finally defined:
+    virtual vd gamma(const vd& T) const {return g->cp(T)/g->cv(T);}
+    virtual vd pr(const vd& T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
+    virtual d pr(d T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
+    virtual d gamma(d T) const {return g->cp(T)/g->cv(T);}
 
-    // The whole bunch of forwarding functions
-    vd rho(const vd& T,const d& p) const {return m->rho(T,p);}
-    vd rho(const vd& T,const vd& p) const {return m->rho(T,p);}
-    vd p(const vd& T,const vd& rho) const {return m->p(T,rho);}
-    vd cp(const vd& T) const { return m->cp(T);}
-    vd pr(const vd& T) const {return m->pr(T);}
-    vd h(const vd& T) const {return m->h(T);}
-    vd cv(const vd& T) const {return m->cv(T);}
-    vd e(const vd& T) const {return m->e(T);}
-    vd beta(const vd& T) const {return m->beta(T);}
-    vd gamma(const vd& T) const {return m->gamma(T);}
-    vd cm(const vd& T) const {return m->cm(T);}
-    vd mu(const vd& T) const { return m->mu(T);}
-    vd kappa(const vd& T) const { return m->kappa(T);}
+    // Virtutals which should be overridden
+    virtual d Rs() const {return g->Rs();}
+    virtual vd rho(const vd& T,d p) const {return g->rho(T,p);}
+    virtual vd rho(const vd& T,const vd& p) const {return g->rho(T,p);}
+    virtual vd p(const vd& T,const vd& rho) const {return g->p(T,rho);}
+    virtual vd cp(const vd& T) const { return g->cp(T);}
+    virtual vd h(const vd& T) const {return g->h(T);}
+    virtual vd cv(const vd& T) const {return g->cv(T);}
+    virtual vd e(const vd& T) const {return g->e(T);}
+    virtual vd beta(const vd& T) const {return g->beta(T);}
 
-    d rho(const d& T,const d& p) const {return m->rho(T,p);}
-    d p(const d& T,const d& rho) const {return m->p(T,rho);}
-    d cp(const d& T) const {return m->cp(T);}
-    d pr(const d& T) const {return m->pr(T);}
-    d h(const d& T) const {return m->h(T);}
-    d cv(const d& T) const {return m->cv(T);}
-    d e(const d& T) const {return m->e(T);}
-    d beta(const d& T) const {return m->beta(T);}
-    d gamma(const d& T) const {return m->gamma(T);}
-    d cm(const d& T) const {return m->cm(T);}
-    d mu(const d& T) const { return m->mu(T);}
-    d kappa(const d& T) const { return m->kappa(T);}
+    virtual vd cm(const vd& T) const {return g->cm(T);}
+    virtual vd mu(const vd& T) const { return g->mu(T);}
+    virtual vd kappa(const vd& T) const { return g->kappa(T);}
+
+    virtual d rho(d T,d p) const {return g->rho(T,p);}
+    virtual d p(d T,d rho) const {return g->p(T,rho);}
+    virtual d cp(d T) const {return g->cp(T);}
+
+    virtual d h(d T) const {return g->h(T);}
+    virtual d cv(d T) const {return g->cv(T);}
+    virtual d e(d T) const {return g->e(T);}
+    virtual d beta(d T) const {return g->beta(T);}
+
+    virtual d cm(d T) const {return g->cm(T);}
+    virtual d mu(d T) const { return g->mu(T);}
+    virtual d kappa(d T) const { return g->kappa(T);}
 
    };
 

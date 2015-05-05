@@ -60,12 +60,14 @@ SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/ src)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/gas src)
 
 include_directories(
   ${PYTHON_INCLUDE_PATH}
   ${EIGEN3_INCLUDE_DIR}
   ${ARMADILLO_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}/src # The source code
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/gas # The source code for gas instances
   )
 
 # The common library
