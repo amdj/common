@@ -38,10 +38,10 @@ namespace gases {
     #endif
 
     // Finally defined:
-    vd gamma(const vd& T) const {return g->cp(T)/g->cv(T);}
-    vd pr(const vd& T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
-    d pr(d T) const {return g->mu(T)*g->cp(T)/g->kappa(T);}
-    d gamma(d T) const {return g->cp(T)/g->cv(T);}
+    vd gamma(const vd& T) const {return cp(T)/cv(T);}
+    vd pr(const vd& T) const {return mu(T)*cp(T)/kappa(T);}
+    d pr(d T) const {return mu(T)*cp(T)/kappa(T);}
+    d gamma(d T) const {return cp(T)/cv(T);}
 
     // Virtuals which should be overridden
     virtual d Rs() const {return g->Rs();}
