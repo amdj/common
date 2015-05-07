@@ -39,7 +39,7 @@ namespace gases {
 
     // Finally defined:
     vd gamma(const vd& T) const {return cp(T)/cv(T);}
-    vd pr(const vd& T) const {return mu(T)*cp(T)/kappa(T);}
+    vd pr(const vd& T) const {return mu(T)%cp(T)/kappa(T);}
     d pr(d T) const {return mu(T)*cp(T)/kappa(T);}
     d gamma(d T) const {return cp(T)/cv(T);}
 
