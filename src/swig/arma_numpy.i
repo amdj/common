@@ -34,7 +34,7 @@ typedef unsigned us;
   $1 = (PyComplex_Check($input) ) ? 1 : 0;
 }
 %typecheck(1096) vd,vd&,const vd&{
-  cout << "Check if it is a double array...\n";
+  // cout << "Check if it is a double array...\n";
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
@@ -43,7 +43,7 @@ typedef unsigned us;
   // }
 }
 %typecheck(1095) vc,vc&,const vc& {
-  cout << "Check if it is a complex array..\n";
+  // cout << "Check if it is a complex array..\n";
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_COMPLEX128) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1))?1:0;
@@ -52,7 +52,7 @@ typedef unsigned us;
   // }
  }
 %typecheck(1094) vd2& {
-  cout << "Check if it is a double array of size 2...\n";
+  // cout << "Check if it is a double array of size 2...\n";
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1) &&
@@ -63,7 +63,7 @@ typedef unsigned us;
   // }
 }
 %typecheck(1093) vc2& {
-  cout << "Check if it is a complex array of size 2...\n";
+  // cout << "Check if it is a complex array of size 2...\n";
   $1=(PyArray_Check($input) &&
       (PyArray_TYPE((PyArrayObject*) $input)==NPY_COMPLEX128) &&
       (PyArray_NDIM((PyArrayObject*) $input)==1) &&
