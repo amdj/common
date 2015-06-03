@@ -26,7 +26,7 @@ const std::complex<double> I(0,1); //Complex unity
 const std::complex<double> minI(0,-1); //Minus complex unity
 const double number_pi=arma::datum::pi; // The number 3.14159265359..
 
-typedef unsigned us;		  /* Size type I always use */
+typedef arma::uword us;		  /* Size type I always use */
 
 #define fillwith arma::fill	    // Fill vector or matrix with ...
 
