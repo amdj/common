@@ -8,7 +8,7 @@
 #include <Python.h>
 #include "pycallback.h"
 #include "exception.h"
-
+#include "pylock.h"
 namespace python {
   
   d PythonCallBackDouble(double a, void *clientdata) {
@@ -16,6 +16,7 @@ namespace python {
     PyObject *result;
     double    dres = 0;
    
+    PyLock p;				      // Acquire lock on interpreter
     func = (PyObject *) clientdata;               // Get Python function
     arglist = Py_BuildValue("(d)",a);             // Build argument list
     result = PyEval_CallObject(func,arglist);     // Call Python
@@ -35,7 +36,10 @@ namespace python {
     PyObject *func, *arglist;
     PyObject *result;
     Py_complex res;
-
+    
+    PyLock p;				      // Acquire lock on
+					      // interpreter
+    
     func = (PyObject *) clientdata;               // Get Python function
     arglist = Py_BuildValue("(d)",a);             // Build argument list
     result = PyEval_CallObject(func,arglist);     // Call Python
