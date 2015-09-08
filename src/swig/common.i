@@ -36,8 +36,8 @@ namespace solids{
     Solid(const Solid&);
     vd kappa(const vd& T) const;
     d kappa(const d& T) const;
-    vd cs(const vd& T) const;
-    d cs(const d& T) const;
+    vd c(const vd& T) const;
+    d c(const d& T) const;
     vd rho(const vd& T) const;
     d rho(const d& T) const;
     ~Solid();

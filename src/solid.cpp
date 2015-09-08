@@ -46,11 +46,11 @@ namespace solids{
   d Solid::kappa(const d& T) const {
     return sol->kappa(T);
   }
-  vd Solid::cs(const vd& T) const {
-    return sol->cs(T);
+  vd Solid::c(const vd& T) const {
+    return sol->c(T);
   }
-  d Solid::cs(const d& T) const {
-    return sol->cs(T);
+  d Solid::c(const d& T) const {
+    return sol->c(T);
   }
   vd Solid::rho(const vd& T) const {
     return sol->rho(T);
@@ -63,19 +63,19 @@ namespace solids{
     delete sol;
   }
 
-  vd stainless_hopkins::cs(const vd& T) const{return 490*pow(T,0);}
-  d stainless_hopkins::cs(const d& T) const{return 490;}   
+  vd stainless_hopkins::c(const vd& T) const{return 490*pow(T,0);}
+  d stainless_hopkins::c(const d& T) const{return 490;}   
   vd stainless_hopkins::rho(const vd& T) const{return 7900*pow(T,0);}
   d stainless_hopkins::rho(const d& T) const{return 7900;}  
   vd stainless_hopkins::kappa(const vd& T) const{return 14.9*pow(T,0);}
   d stainless_hopkins::kappa(const d& T) const{return 14.9;}   
 
    
-  vd stainless::cs(const vd& T) const {
+  vd stainless::c(const vd& T) const {
     vd arg=1.7054e-6*pow(T,-0.88962)+22324.0/pow(T,6);
     return pow(arg,-1.0/3.0)+15/T;
   }
-  d stainless::cs(const d& T) const {
+  d stainless::c(const d& T) const {
     d arg=1.7054e-6*pow(T,-0.88962)+22324.0/pow(T,6);
     return pow(arg,-1.0/3.0)+15/T;
   }
@@ -97,8 +97,8 @@ namespace solids{
     return 398.0-0.567*(T-300.0);
   }
   d copper::kappa(const d& T) const { return 398.0-0.567*(T-300.0); }
-  vd copper::cs(const vd& T) const {return 420.0*pow(T,0);}
-  d copper::cs(const d& T) const {return 420.0*pow(T,0);}
+  vd copper::c(const vd& T) const {return 420.0*pow(T,0);}
+  d copper::c(const d& T) const {return 420.0*pow(T,0);}
   vd copper::rho(const vd& T) const {return 9000.0*pow(T,0);}
   d copper::rho(const d& T) const {return 9000.0*pow(T,0);}
 
