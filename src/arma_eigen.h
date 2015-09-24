@@ -1,6 +1,12 @@
-// File: aram_eigen.h
-// Author: J.A. de Jong
+// arma_eigen.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
 // Some functions to convert from Armadillo to Eigen and vice versa.
+//
+//////////////////////////////////////////////////////////////////////
+
 #pragma once
 #ifndef _ARMA_EIGEN_H_
 #define _ARMA_EIGEN_H_

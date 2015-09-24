@@ -1,3 +1,13 @@
+// settracer.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
+//
+//////////////////////////////////////////////////////////////////////
+#pragma once
+#ifndef SETTRACER_H
+#define SETTRACER_H
 #include "tracer.h"
 
 namespace tracer {
@@ -10,6 +20,10 @@ namespace tracer {
     
   }      
 } // namespace tracer
+
+#endif // SETTRACER_H
+//////////////////////////////////////////////////////////////////////
+
 
 
 

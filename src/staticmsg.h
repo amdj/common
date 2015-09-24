@@ -6,6 +6,7 @@
 // pre-allocated. The message can dynamically be copied from a
 // string. It is of use when a MyError() class is thrown, where a
 // custom message is applied.
+// This way, memory allocation is prevented when an exception is thrown.
 //////////////////////////////////////////////////////////////////////
 #pragma once
 #ifndef STATICMSG_H
