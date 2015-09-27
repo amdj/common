@@ -14,7 +14,7 @@ include(${SWIG_USE_FILE})
 SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 # Eigen
-find_package(Eigen3 REQUIRED)
+# find_package(Eigen3 REQUIRED)
 
 # Armadillo
 find_package(Armadillo REQUIRED)
@@ -60,7 +60,7 @@ AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/gas src_gas)
 
 include_directories(
   ${PYTHON_INCLUDE_PATH}
-  ${EIGEN3_INCLUDE_DIR}
+  # ${EIGEN3_INCLUDE_DIR}
   ${ARMADILLO_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}/src # The source code
   ${CMAKE_CURRENT_SOURCE_DIR}/src/gas # The source code for gas instances
