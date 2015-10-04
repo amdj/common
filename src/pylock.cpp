@@ -5,9 +5,9 @@
 // Description:
 //
 //////////////////////////////////////////////////////////////////////
-#include "tracer.h"
-#include "Python.h"
 #include "pylock.h"
+#include <Python.h>
+#include "tracer.h"
 
 namespace{
   PyGILState_STATE gstate;
