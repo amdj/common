@@ -9,9 +9,9 @@
 find_package(PythonLibs REQUIRED)
 
 # Initialize swig
-find_package(SWIG REQUIRED)
-include(${SWIG_USE_FILE})
-SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
+# find_package(SWIG REQUIRED)
+# include(${SWIG_USE_FILE})
+# SET(CMAKE_SWIG_FLAGS -py3 -Wall -DSWIG_PYTHON)
 
 # Eigen
 # find_package(Eigen3 REQUIRED)
@@ -68,21 +68,24 @@ include_directories(
 
 # The common library
 add_library(common_src ${src} ${src_gas})
+add_library(_common SHARED commonPYTHON_wrap.cxx)
+target_link_libraries(_common common_src)
+set_target_properties(_common PROPERTIES PREFIX "")
 
-set_source_files_properties(src/swig/common.i PROPERTIES CPLUSPLUS ON)
-set_source_files_properties(src/swig/arma_numpy.i PROPERTIES CPLUSPLUS ON)
-set_source_files_properties(src/arma_numpy.cpp  PROPERTIES COMPILE_FLAGS
-  " -Wno-#warnings")
+# set_source_files_properties(src/swig/common.i PROPERTIES CPLUSPLUS ON)
+# set_source_files_properties(src/swig/arma_numpy.i PROPERTIES CPLUSPLUS ON)
+# set_source_files_properties(src/arma_numpy.cpp  PROPERTIES COMPILE_FLAGS
+#   " -Wno-#warnings")
 
-set(SWIG_MODULE_common_EXTRA_DEPS src/swig/arma_numpy.i)
+# set(SWIG_MODULE_common_EXTRA_DEPS src/swig/arma_numpy.i)
 
-swig_add_module(common python src/swig/common.i)
+# swig_add_module(common python src/swig/common.i)
 
 # common should be linked to armadillo
-swig_link_libraries(common common_src
-  ${PYTHON_LIBRARIES}
-  ${ARMADILLO_LIBRARIES}
-)
-set_source_files_properties( ${swig_generated_file_fullname}
+# swig_link_libraries(common common_src
+#   ${PYTHON_LIBRARIES}
+#   ${ARMADILLO_LIBRARIES}
+# )
+set_source_files_properties( 
       PROPERTIES COMPILE_FLAGS "-Wno-missing-field-initializers -Wno-self-assign -Wno-#warnings")
 
