@@ -2,6 +2,8 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 *.so
+commonPYTHON_wrap.cxx
 *.a
+common.py
 cmake_install.cmake
 __pycache__
