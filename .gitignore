@@ -7,3 +7,9 @@ commonPYTHON_wrap.cxx
 common.py
 cmake_install.cmake
 __pycache__
+.vs
+
+Debug
+common_wrap.cxx
+x64
+common.*

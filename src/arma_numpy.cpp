@@ -10,6 +10,8 @@
 #define NO_IMPORT_ARRAY
 #include "arma_numpy.h"
 
+#include <string.h>
+
 // Annes conversion functions. In a later stage they have to be
 // generalized for arrays of arbitrary dimensions
 
@@ -28,7 +30,7 @@ PyObject *npy_from_vd(const vd &in) {
     return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), size * sizeof(double));
+  memcpy(pydat, in.memptr(), size * sizeof(double));
 
   return PyArray_Return(array);
 }
@@ -47,7 +49,7 @@ PyObject *npy_from_vd2(const vd2 &in) {
     return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), size * sizeof(double));
+  memcpy(pydat, in.memptr(), size * sizeof(double));
 
   return PyArray_Return(array);
 }
@@ -67,7 +69,7 @@ PyObject *npy_from_vc2(const vc2 &in) {
     return nullptr;
   }
   npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), size * sizeof(c));
+  memcpy(pydat, in.memptr(), size * sizeof(c));
 
   return PyArray_Return(array);
 }
@@ -88,7 +90,7 @@ PyObject *npy_from_vc(const vc &in) {
     return nullptr;
   }
   npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), size * sizeof(npy_cdouble));
+  memcpy(pydat, in.memptr(), size * sizeof(npy_cdouble));
   return (PyObject*)array;
 }
 
@@ -148,7 +150,7 @@ PyObject *npy_from_dmat22(const dmat22 &in) {
     return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), 4 * sizeof(double));
+  memcpy(pydat, in.memptr(), 4 * sizeof(double));
   return (PyObject*)array;
 }
 // Convert Armadillo matrix to Numpy Array
@@ -163,7 +165,7 @@ PyObject *npy_from_dmat(const dmat &in) {
     return nullptr;
   }
   double *pydat = (double *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), size*sizeof(double));
+  memcpy(pydat, in.memptr(), size*sizeof(double));
   return (PyObject*)array;
 }
 PyObject *npy_from_cmat22(const cmat22 &in) {
@@ -176,7 +178,7 @@ PyObject *npy_from_cmat22(const cmat22 &in) {
     return nullptr;
   }
   npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
-  mempcpy(pydat, in.memptr(), 4 * sizeof(npy_cdouble));
+  memcpy(pydat, in.memptr(), 4 * sizeof(npy_cdouble));
   return (PyObject*)array;
 }
 

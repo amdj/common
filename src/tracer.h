@@ -36,7 +36,11 @@
 
 
 #ifndef TRACERNAME
+#ifdef __GNUC__
 #warning TRACERNAME name not set, sol TRACERNAME set to 'defaulttracer'
+#else
+#pragma message("TRACERNAME name not set, sol TRACERNAME set to defaulttracer")
+#endif
 #define TRACERNAME defaulttracer
 #endif
 
