@@ -1,12 +1,9 @@
-%module common
+%module special
 %{
   #define SWIG_FILE_WITH_INIT
   #define PY_ARRAY_UNIQUE_SYMBOL npy_array
-  #include "rottfuncs.h"
-  #include "gas.h"
-  #include "solid.h"
   #include "settracer.h"
-  #include "special/sph_j.h"
+
   TRACETHIS
   inline void setCommonTracer(int t) {
     tracer::setTracer<TRACERNAME>(t);
@@ -27,7 +24,6 @@ typedef std::string string;
 %include "rottfuncs.h"
  // Gas
 %include "gas.h"
-%include "special/sph_j.h"
 
 namespace solids{
 

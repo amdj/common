@@ -33,6 +33,12 @@ typedef unsigned us;
 {
   $1 = (PyComplex_Check($input) ) ? 1 : 0;
 }
+%typecheck(1097) dmat,dmat&,const dmat& {
+  cout << "Checking if its a dmat...\n";
+  $1=(PyArray_Check($input) && (PyArray_TYPE((PyArrayObject*) $input)==NPY_DOUBLE)
+      && (PyArray_NDIM((PyArrayObject*) $input)==2))?1:0;
+}
+ 
 %typecheck(1096) vd,vd&,const vd&{
   // cout << "Check if it is a double array...\n";
   $1=(PyArray_Check($input) &&
@@ -75,6 +81,10 @@ typedef unsigned us;
 }
 %typemap(in) vd& (vd temp) {
   temp=vd_from_npy_nocpy((PyArrayObject*) $input);
+  $1=&temp;
+}
+%typemap(in) dmat& (dmat temp) {
+  temp=dmat_from_npy((PyArrayObject*) $input);
   $1=&temp;
 }
 %typemap(in) vc& (vc temp) {

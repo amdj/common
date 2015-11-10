@@ -28,6 +28,9 @@ vc vc_from_npy_nocpy(PyArrayObject const * const);
 vd2 vd2_from_npy(PyArrayObject const * const);
 vc2 vc2_from_npy(PyArrayObject const * const);
 
+dmat dmat_from_npy(PyArrayObject*);
+cmat cmat_from_npy(PyArrayObject const* const);
+
 PyObject* npy_from_dmat(const dmat&); // matrix double
 PyObject* npy_from_dmat22(const dmat22&); // 2x2 matrix double
 PyObject* npy_from_cmat22(const cmat22&); // 2x2 matrix complex
