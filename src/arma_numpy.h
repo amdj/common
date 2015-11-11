@@ -49,7 +49,7 @@ vd2 vd2_from_npy(PyArrayObject const * const);
 vc2 vc2_from_npy(PyArrayObject const * const);
 
 dmat dmat_from_npy(PyArrayObject*);
-cmat cmat_from_npy(PyArrayObject const* const);
+cmat cmat_from_npy(PyArrayObject *);
 
 PyObject* npy_from_dmat(const dmat&); // matrix double
 // from cmat not yet implemented

@@ -54,7 +54,7 @@ bool check_vd(PyObject * input){
 	      (PyArray_TYPE((PyArrayObject*) input)==NPY_COMPLEX128) &&
 	      (PyArray_NDIM((PyArrayObject*) input)==1) &&
 	      (PyArray_DIMS((PyArrayObject*) input)[0]==2)
-	      )?1:0;
+	      )?true:false;
     // if(res){
     //   std::cout << "Is is a complex array of size 2..\n";
     // }
@@ -72,16 +72,16 @@ bool check_vd(PyObject * input){
 
   bool check_dmat(PyObject * input){
     // std::cout << "Checking if its a dmat...\n";
-    bool res=(PyArray_CheckExact(input) &&
+    return (PyArray_CheckExact(input) &&
 	      (PyArray_TYPE((PyArrayObject*) input)==NPY_DOUBLE) &&
-	      (PyArray_NDIM((PyArrayObject*) input)==2))?true:false;
-    // if(res)
-    //   cout << "It is a dmat\n";
-    return res;
+	      (PyArray_NDIM((PyArrayObject*) input)==2)
+	    ) ? true:false;
   }
   bool check_cmat(PyObject * input){
-    cout << "Not yet implemented!\n";
-    return false;
+    return (PyArray_CheckExact(input) &&
+	      (PyArray_TYPE((PyArrayObject*) input)==NPY_COMPLEX128) &&
+	      (PyArray_NDIM((PyArrayObject*) input)==2)
+	    ) ? true:false;
   }
 
   bool check_dmat22(PyObject * input){
@@ -241,8 +241,6 @@ bool check_vd(PyObject * input){
 	memcpy(result.memptr(),
 	       PyArray_DATA(pyarray_fortran_contiguous),
 	       size*sizeof(npy_cdouble));
-	// And decref the newly created array
-	Py_XDECREF(pyarray_fortran_contiguous);
       }
     }
     // cout << "Returning result\n";
