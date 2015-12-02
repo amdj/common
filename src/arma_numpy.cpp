@@ -201,18 +201,16 @@ bool check_vd(PyObject * input){
       memcpy(result.memptr(),pydata,size*sizeof(double));
     else{
 
-      // If the input array is C-contiguous, the last index varies the
-      // fastest, or, in other words, the array is stored row-by
-      // row. This is incompatible with the Fortran storage. Therefore,
-      // we first create a fortran-contiguous array and copy from there
-      for(us i=0;i<rows;i++){
+        // If the input array is C-contiguous, the last index varies the
+        // fastest, or, in other words, the array is stored row-by
+        // row. This is incompatible with the Fortran storage. Therefore,
+        // we first create a fortran-contiguous array and copy from there
 	PyArray_Descr* in_descr=PyArray_DESCR(in);
 	PyArrayObject* pyarray_fortran_contiguous=(PyArrayObject*) PyArray_FromArray(
 										     in,in_descr,NPY_ARRAY_F_CONTIGUOUS);
 	memcpy(result.memptr(),
 	       PyArray_DATA(pyarray_fortran_contiguous),
 	       size*sizeof(double));
-      }
     }
     // cout << "Returning result\n";
     return result;
@@ -230,18 +228,17 @@ bool check_vd(PyObject * input){
       memcpy(result.memptr(),pydata,size*sizeof(npy_cdouble));
     else{
 
-      // If the input array is C-contiguous, the last index varies the
-      // fastest, or, in other words, the array is stored row-by
-      // row. This is incompatible with the Fortran storage. Therefore,
-      // we first create a fortran-contiguous array and copy from there
-      for(us i=0;i<rows;i++){
+        // If the input array is C-contiguous, the last index varies the
+        // fastest, or, in other words, the array is stored row-by
+        // row. This is incompatible with the Fortran storage. Therefore,
+        // we first create a fortran-contiguous array and copy from there
 	PyArray_Descr* in_descr=PyArray_DESCR(in);
 	PyArrayObject* pyarray_fortran_contiguous=(PyArrayObject*) PyArray_FromArray(
 										     in,in_descr,NPY_ARRAY_F_CONTIGUOUS);
 	memcpy(result.memptr(),
 	       PyArray_DATA(pyarray_fortran_contiguous),
 	       size*sizeof(npy_cdouble));
-      }
+
     }
     // cout << "Returning result\n";
     return result;
@@ -268,7 +265,6 @@ bool check_vd(PyObject * input){
     memcpy(result.memptr(),pydata,size*sizeof(npy_cdouble));
     return result;
   }
-
 
   vc2 vc2_from_npy(const PyArrayObject *const in) {
     npy_intp size=PyArray_DIMS(in)[0]; // Extract first 
