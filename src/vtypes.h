@@ -64,6 +64,8 @@ typedef arma::uword us;		  /* Size type I always use */
   typedef arma::cx_mat44 cmat44;  /* Fixed size complex */			\
   typedef arma::mat44 dmat44;	  /* .. and so on */				\
   typedef arma::cx_vec4 vc4;							\
+  typedef arma::vec8 vd8;							\
+  typedef arma::vec8 vc8;							\
   typedef arma::vec4 vd4;							\
   typedef arma::vec3 vd3;							\
   typedef arma::cx_mat22 cmat22;						\
