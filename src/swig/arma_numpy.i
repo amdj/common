@@ -51,9 +51,9 @@ c,c&,const c &
 %typecheck(1097) dmat,dmat&,const dmat& {
   $1=check_dmat($1);
 }
-// %typecheck(1097) cmat,cmat&,const cmat& {
-//   $1=check_cmat($1);
-// }
+%typecheck(1097) cmat,cmat&,const cmat& {
+  $1=check_cmat($1);
+}
 
 
 %typemap(in) vd& (vd temp) {
@@ -130,6 +130,12 @@ c,c&,const c &
  }
 %typemap(out) (const dmat&) {
   $result=npy_from_dmat(*$1);
+}
+%typemap(out) cmat {
+  $result=npy_from_cmat($1);
+ }
+%typemap(out) (const cmat&) {
+  $result=npy_from_cmat(*$1);
 }
 %typemap(out) dmat22 {
   $result=npy_from_dmat22($1);

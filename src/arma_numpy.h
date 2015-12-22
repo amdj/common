@@ -52,6 +52,7 @@ dmat dmat_from_npy(PyArrayObject*);
 cmat cmat_from_npy(PyArrayObject *);
 
 PyObject* npy_from_dmat(const dmat&); // matrix double
+PyObject* npy_from_cmat(const cmat&); // matrix double
 // from cmat not yet implemented
 
 PyObject* npy_from_dmat22(const dmat22&); // 2x2 matrix double

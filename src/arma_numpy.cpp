@@ -310,6 +310,20 @@ bool check_vd(PyObject * input){
     memcpy(pydat, in.memptr(), size*sizeof(double));
     return (PyObject*)array;
   }
+  PyObject *npy_from_cmat(const cmat &in) {
+    // dmat in=in2.t();
+    npy_intp dims[2] = {(npy_intp) in.n_rows,(npy_intp) in.n_cols};
+    npy_intp size=(npy_intp) in.n_rows*in.n_cols;
+    // Last 
+    PyObject* array = PyArray_EMPTY(2, dims, NPY_COMPLEX128, true);
+    if (!array || !PyArray_ISFORTRAN(array)) {
+      std::cout << "Array creation failed" << std::endl;
+      return nullptr;
+    }
+    npy_cdouble *pydat = (npy_cdouble *)PyArray_DATA(array);
+    memcpy(pydat, in.memptr(), size*sizeof(npy_cdouble));
+    return (PyObject*)array;
+  }
   PyObject *npy_from_cmat22(const cmat22 &in) {
     npy_intp dims[2] = {2,2};
 
