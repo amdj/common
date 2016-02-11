@@ -18,7 +18,10 @@
   import_array();
   %}
 
+%include "std_complex.i"
+
 typedef double d;
+typedef std::complex<double> c;
 typedef unsigned us;
 
 
