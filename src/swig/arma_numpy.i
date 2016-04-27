@@ -1,3 +1,5 @@
+// 
+
 %module arma_numpy
 %{
   // #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
@@ -18,6 +20,7 @@
   import_array();
   %}
 
+// Include wrappers 
 %include "std_complex.i"
 
 typedef double d;
@@ -36,17 +39,19 @@ c,c&,const c &
 {
   $1 = (PyComplex_Check($input) ) ? 1 : 0;
 }
-
+// Check whether the input is a column vector of doubles
 %typecheck(1096) vd{
   $1=check_vd($input);
  }
+// Check whether the input is a column vector of complex numbers
 %typecheck(1095) vc,vc&,const vc& {
   $1=check_vc($input);
 }
-
+// Check whether the input is a column vector of doubles of size 2
 %typecheck(1094) vd2& {
   $1=check_vd2($input);
  }
+// Check whether the input is a column vector of complex numbers of size 2
 %typecheck(1093) vc2& {
   $1=check_vc2($input);
  }
@@ -69,7 +74,8 @@ c,c&,const c &
  }
 %typemap(in) vc& (vc temp) {
   if(!check_vc($input)){
-    PyErr_SetString(PyExc_ValueError,"Expected a one-dimensional array of complex doubles");
+    PyErr_SetString(PyExc_ValueError,"Expected a one-dimensional array of\
+ complex doubles");
     return NULL;
   }
   temp=vc_from_npy_nocpy((PyArrayObject*) $input);

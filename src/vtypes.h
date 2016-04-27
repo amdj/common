@@ -1,11 +1,14 @@
+// vtypes.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
+// Typedefs for vector objects in C++
+//////////////////////////////////////////////////////////////////////
 #pragma once
-// file: vtypes.h
-// author: J.A. de Jong
-// This file defines useful macros for faster typing of numerical code. 
-
 #ifndef VTYPES_H
 #define VTYPES_H
-
+// We require C++
 #ifndef __cplusplus
 #error The c++ compiler should be used.
 #endif
@@ -74,13 +77,7 @@ typedef arma::uword us;		  /* Size type I always use */
   typedef arma::vec2 vd2;							
 
 
+
+
 #endif // VTYPES_H
-
-
-
-
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////

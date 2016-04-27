@@ -1,26 +1,27 @@
-// ConsoleColor.h
+// consolecolors.h
+//
+// Author: J.A. de Jong 
+//
+// Description:
+// Print text from C++ to stdout in color
+//////////////////////////////////////////////////////////////////////
 #pragma once
-#ifndef _CONSOLECOLORS_H_
-#define _CONSOLECOLORS_H_
-
+#ifndef CONSOLECOLORS_H
+#define CONSOLECOLORS_H
 #include <iostream>
+
 #ifndef SWIG
 #define red "\e[31m"
 #define green "\e[32m"
 #define def " \e[39m"
 
-        // FG_RED      = 31,
-        // FG_GREEN    = 32,
-        // FG_BLUE     = 34,
-        // FG_DEFAULT  = 39,
-        // BG_RED      = 41,
-        // BG_GREEN    = 42,
-        // BG_BLUE     = 44,
-        // BG_DEFAULT  = 49
-#endif
+#endif  // SWIG
 
+// Command to clear the content of a console
 inline void clearConsole(){
   std::cout << "\033c" << std::endl;
 }
 
-#endif /* _CONSOLECOLORS_H_ */
+#endif // CONSOLECOLORS_H
+//////////////////////////////////////////////////////////////////////
+
